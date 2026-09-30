@@ -34,7 +34,9 @@ sane before touching any of this.
   and best-checkpoint selection by validation WER (`<out>` = best WER,
   `<out>-last` = newest + `trainer_state.pt`). The old `WindowDataset` no longer
   exists in the script. Extra deps: `pip install -r requirements-train.txt`.
-- [ ] Still **not done**: items 1 and 6-12 (need HuggingFace/AMI access and compute).
+- [x] **Item 6 driver** (`training/sweep.py`) and **item 10** (bootstrap CIs, `src/bootstrap.py`) are
+  implemented and unit-tested; the sweep has not been run.
+- [ ] Still **not done**: items 1, 7-9, 11-12 and running 6 (need HuggingFace/AMI access and compute).
   Re-download AMI, rebuild windows with the new script, rebuild the encoder cache,
   then proceed.
 
