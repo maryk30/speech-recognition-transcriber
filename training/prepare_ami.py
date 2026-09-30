@@ -21,8 +21,7 @@ single-vs-overlap routing logic the pipeline uses at inference
 windows utterances that fall inside one -- so a training pair is always
 "this audio -> this one speaker's words", matching production exactly.
 Overlapping stretches are excluded from base-ASR fine-tuning (they go
-through the separator at inference, a different problem -- see
-prepare_overlap_data.py for training data aimed at that stage instead).
+through the separator at inference, a different problem, not trained here).
 
     python training/prepare_ami.py --split train
     python training/prepare_ami.py --split validation

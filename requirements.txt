@@ -13,6 +13,10 @@ speechbrain
 # (needs a free HuggingFace account + token; see README.md)
 pyannote.audio>=4.0
 
+# Whisper on the Apple GPU (default ASR backend on Apple silicon; ~5x faster than CPU).
+# Without it the pipeline silently falls back to faster-whisper on CPU.
+mlx-whisper; sys_platform == "darwin" and platform_machine == "arm64"
+
 # Phase 7 -- live server
 aiohttp
 

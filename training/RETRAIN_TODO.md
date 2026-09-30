@@ -40,6 +40,22 @@ sane before touching any of this.
   Re-download AMI, rebuild windows with the new script, rebuild the encoder cache,
   then proceed.
 
+## How to run it (training machine: 13" MacBook Air, M3, 16 GB, fanless)
+
+```bash
+./setup.sh && .venv/bin/pip install -r requirements-train.txt
+./run.sh test                                   # must pass first
+./training/run_all.sh                           # data -> cache -> stock baseline -> train -> convert -> eval
+SWEEP=1 STAGES="sweep" ./training/run_all.sh    # optional: pick LR / TRAIN_LAYERS first
+```
+
+Every stage skips itself when its output exists and training resumes from
+`models/whisper-small-ami-last/trainer_state.pt`, so an interrupted run is just
+re-run. The Air has no fan and will throttle under hours of load (likely the
+unexplained 10x slowdown last time): plugged in, hard surface, lid open. The
+script refuses to build the encoder cache without enough free disk (~2.3 GB per
+1,000 windows); lower `TRAIN_SHARDS` if it stops there.
+
 ## TODO, in order
 
 1. **Re-run data prep with the new single-speaker windowing.**
