@@ -68,12 +68,16 @@ fi
 
 # ------------------------------------------------------------------ baseline (stock model, before any training)
 if want baseline; then
-  if [ -f results/baseline_stock.json ]; then
-    stamp "baseline: results/baseline_stock.json exists"
+  if grep -qs "^filler recall" results/utt_stock.txt; then
+    stamp "baseline: results/utt_stock.txt exists (utterance level)"
   else
     stamp "baseline: stock Whisper-small, utterance level (300 held-out AMI utterances)"
     $PY training/asr_eval.py --model small -n 300 --normalize --save output/utt_stock.json \
       | tee results/utt_stock.txt || die "asr_eval stock"
+  fi
+  if [ -f results/baseline_stock.json ]; then
+    stamp "baseline: results/baseline_stock.json exists (meetings)"
+  else
     stamp "baseline: stock Whisper-small, full pipeline on the 3 AMI excerpts"
     $PY scripts/baseline.py --tag stock || die "baseline stock"
   fi

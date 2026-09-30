@@ -35,7 +35,9 @@ def _seglst(turns: Iterable[Turn], drop_fillers: bool):
             "speaker": t.speaker,
             "words": " ".join(words),
             "start_time": float(t.start),
-            "end_time": float(t.end),
+            # MeetEval rejects end < start; a malformed hypothesis turn should
+            # cost its words, not crash the whole scoring run.
+            "end_time": max(float(t.end), float(t.start)),
         })
     return SegLST(segments)
 

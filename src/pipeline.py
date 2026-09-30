@@ -92,6 +92,15 @@ def _continues(neighbour: Optional[Segment], speaker: str, boundary: float) -> b
     return gap <= CONTEXT_PAD_S
 
 
+def _line_span(clip_start: float, utt: Utterance, floor: float) -> tuple[float, float]:
+    """Recording-time (start, end) of a transcribed utterance. The start is
+    raised to `floor` (see _run_jobs); the end is raised with it, because an
+    utterance whose words Whisper placed entirely before `floor` would
+    otherwise end before it starts."""
+    start = max(clip_start + utt.start, floor)
+    return start, max(clip_start + utt.end, start)
+
+
 def _log(msg: str) -> None:
     print(msg, file=sys.stderr, flush=True)
 
@@ -293,17 +302,10 @@ class TranscriptionPipeline:
             # A first word that Whisper stretched back into leading silence must
             # not be stamped earlier than the window the speaker actually entered.
             floor = -float("inf") if job.crop_lo else seg.start
-            lines += [
-                TranscriptLine(
-                    job.label,
-                    max(job.clip_start + u.start, floor),
-                    u.as_display_text(),
-                    job.clip_start + u.end,
-                    seg.is_overlapping,
-                )
-                for u in utts
-                if _usable(u, job.strict)
-            ]
+            for u in utts:
+                if _usable(u, job.strict):
+                    start, end = _line_span(job.clip_start, u, floor)
+                    lines.append(TranscriptLine(job.label, start, u.as_display_text(), end, seg.is_overlapping))
         return lines
 
     def _assign_owners(

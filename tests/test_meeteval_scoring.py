@@ -34,3 +34,9 @@ def test_tcpwer_penalises_words_far_in_time():
     hyp = [Turn("A", 100.0, 102.0, "hello world"), Turn("B", 102.0, 103.0, "yes"), Turn("A", 103.0, 105.0, "see you later")]
     assert meeteval_cpwer(REF, hyp)["wer"] == 0.0
     assert meeteval_tcpwer(REF, hyp, collar=5.0)["wer"] > 0.0
+
+
+def test_reversed_hypothesis_turn_does_not_crash():
+    hyp = [Turn("X", 0.0, 2.0, "hello world"), Turn("Y", 2.5, 2.4, "yes"), Turn("X", 3.0, 5.0, "see you later")]
+    assert meeteval_cpwer(REF, hyp)["wer"] == 0.0
+    assert meeteval_tcpwer(REF, hyp)["wer"] == 0.0
