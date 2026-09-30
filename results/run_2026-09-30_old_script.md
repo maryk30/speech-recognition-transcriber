@@ -4,8 +4,9 @@ Evidence it is the pre-roadmap script (from `main`): it resumed an earlier check
 1150 steps (= old defaults TOTAL_STEPS 1350 - DONE_STEPS 200), and the output has the old
 section headers, no confidence intervals and no tcpWER. So the fine-tuned rows below are
 **not** the planned retrain: no weight decay, no augmentation, no val-WER checkpoint
-selection, and the earlier checkpoint it resumed from may have been trained on the old
-merged-speaker windows. **Stock rows are a valid baseline** (they don't depend on training).
+selection, and it was trained on the OLD merged-speaker windows (confirmed on the Mac:
+`data/ami/windows_train.json` has 3612 windows with no per-window `speaker` field), i.e.
+exactly the train/inference mismatch the retrain is meant to remove. **Stock rows are a valid baseline** (they don't depend on training).
 
 ## Utterance level (300 held-out AMI SDM utterances, level-normalised, MLX)
 
