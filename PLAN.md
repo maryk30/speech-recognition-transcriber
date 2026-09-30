@@ -382,7 +382,7 @@ separation are parked until the numbers below exist.
 |---|---|---|---|
 | 0 | Reproducible env (`./setup.sh`), tests green | - | done: 74 tests pass (training deps now in `requirements-train.txt`) |
 | 1 | MeetEval scoring (cpWER, tcpWER) next to `src/scoring.py` (`src/meeteval_scoring.py`, `src/meeting_report.py`) | 0 | done |
-| 2 | Commit baseline numbers for the 3 AMI excerpts (stock Whisper), with a script that regenerates them | 1 | script ready (`scripts/baseline.py`, scoring tested); **not run** - needs HF access + token |
+| 2 | Commit baseline numbers for the 3 AMI excerpts (stock Whisper), with a script that regenerates them | 1 | stock baseline done on the Mac (`results/run_2026-09-30_old_script.md`); CI version via `scripts/baseline.py` still to run |
 | 3 | (items 2-5 coded + unit-tested, not trained; rest blocked on data/compute) RETRAIN_TODO 1-8: single-speaker windows, resume, weight decay, augmentation, val-WER checkpointing, small sweep (LoRA / top layers), clean-data mix (TED-LIUM / LibriSpeech) against forgetting | 2 | todo |
 | 4 | Expand eval: more AMI meetings, then NOTSOFAR-1 (real far-field, CC BY 4.0) | 2 | todo |
 | 5 | Punctuation restoration (deepmultilingualpunctuation), fillers and `[pause]` masked first | 3 | todo |
