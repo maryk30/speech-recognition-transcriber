@@ -361,3 +361,36 @@ MLX, evaluation tooling, and a demo mode. Results are in `output/` and in `paper
 - Meeting-level scores (`output/meeting_results.txt`) are on 3 excerpts only.
 - Fine-tuned output is lower-case and unpunctuated (punctuation restoration not built).
 - Microphone input in the browser is still untested with real hardware.
+
+---
+
+## Roadmap v2 (2026-09-30) — resurrect, don't rewrite
+
+Decision: keep the pipeline (it orchestrates pretrained models; almost nothing in
+it needs training). What was weak was *evidence* (3 AMI excerpts, results not
+committed) and the *fine-tune* (WER regression from a train/inference mismatch).
+Plan derived from an open-source survey (MeetEval, CrisperWhisper, Diart,
+WhisperLiveKit, DiCoW, NeMo Sortformer/multitalker Parakeet). Not every
+survey claim was verified (HF/arXiv were unreachable); treat licence and number
+claims as leads. Non-commercial weights: CrisperWhisper, DiariZen.
+
+Scope of the headline claim: **offline verbatim transcription with speaker
+labels; overlaps separated for 2 speakers only.** Live mode and 3+ speaker
+separation are parked until the numbers below exist.
+
+| # | Step | Depends on | Status |
+|---|---|---|---|
+| 0 | Reproducible env (`./setup.sh`), tests green | - | in progress (CPU-only container) |
+| 1 | MeetEval scoring (cpWER, tcpWER, DER) next to `src/scoring.py`; committed baseline in `results/` | 0 | in progress |
+| 2 | Commit baseline numbers for the 3 AMI excerpts (stock Whisper), with a script that regenerates them | 1 | todo |
+| 3 | RETRAIN_TODO 1-8: single-speaker windows, resume, weight decay, augmentation, val-WER checkpointing, small sweep (LoRA / top layers), clean-data mix (TED-LIUM / LibriSpeech) against forgetting | 2 | todo |
+| 4 | Expand eval: more AMI meetings, then NOTSOFAR-1 (real far-field, CC BY 4.0) | 2 | todo |
+| 5 | Punctuation restoration (deepmultilingualpunctuation), fillers and `[pause]` masked first | 3 | todo |
+| 6 | Streaming: Diart-style persistent centroid bank; commit text only when diarization covers it (WhisperLiveKit) | 2 | parked |
+| 7 | Benchmarks on CUDA: NeMo multitalker Parakeet / Sortformer; DiCoW as stretch | 4 | parked |
+| 8 | 3+ speaker separation (MossFormer / TF-GridNet) | 7 | parked |
+
+Kill criteria: if step 3 cannot beat stock Whisper on utterance WER, drop the
+fine-tune and use stock Whisper + verbatim prompt (pipeline unchanged). If the
+baseline run is unusably slow on the target machine, downsize models / skip
+separation by default (config change, not a rewrite).
