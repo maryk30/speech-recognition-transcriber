@@ -1,0 +1,1750 @@
+{
+ "meeting": "EN2002b",
+ "offset": 300.0,
+ "turns": [
+  {
+   "speaker": "MEE073",
+   "start": 1.1,
+   "end": 2.38,
+   "text": "anyways alright"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 2.27,
+   "end": 2.61,
+   "text": "yep"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 2.75,
+   "end": 3.52,
+   "text": "so"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 4.1,
+   "end": 4.88,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 4.88,
+   "end": 6.19,
+   "text": "so i'll send it off to you"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 5.45,
+   "end": 5.87,
+   "text": "well"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 6.19,
+   "end": 6.54,
+   "text": "then um"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 7.64,
+   "end": 14.18,
+   "text": "yeah do what you wanna do with it first and then i'll will look at yeah uh yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 7.97,
+   "end": 8.08,
+   "text": "yep"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 9.52,
+   "end": 9.86,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 11.35,
+   "end": 12.57,
+   "text": "sabotage it"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 11.61,
+   "end": 11.86,
+   "text": "right"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 12.42,
+   "end": 12.8,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 12.57,
+   "end": 13.87,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 13.29,
+   "end": 14.64,
+   "text": "actually d um"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 14.18,
+   "end": 17.94,
+   "text": "and i'll send it out to you again tomorrow or whatever"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 16.2,
+   "end": 16.77,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 16.77,
+   "end": 18.81,
+   "text": "was there anything else we wanted to add to the time line"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 17.94,
+   "end": 18.1,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 18.81,
+   "end": 22.49,
+   "text": "i mean essentially it was what like f um you can't see it right there"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 20.7,
+   "end": 21.19,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 22.49,
+   "end": 24.6,
+   "text": "here i'll s here's the old one"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 23.86,
+   "end": 25.08,
+   "text": "oh there's more"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 24.6,
+   "end": 27.72,
+   "text": "well that's that's the orig this the original one"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 25.08,
+   "end": 26.36,
+   "text": "oh i see"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 26.36,
+   "end": 28.1,
+   "text": "oh this is the one that okay"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 27.72,
+   "end": 30.27,
+   "text": "yeah yeah which just copied straight out"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 30.27,
+   "end": 30.78,
+   "text": "um"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 31.01,
+   "end": 35.91,
+   "text": "probably wanna think about if we wanna change our goals and stuff"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 35.63,
+   "end": 35.91,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 35.91,
+   "end": 45.74,
+   "text": "i think it um one thing that we could probably skip uh totally is the removing things from the audio files"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 45.47,
+   "end": 49.09,
+   "text": "that's what i thought as well i mean do we are we are we actually gonna attempt that"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 46.95,
+   "end": 47.26,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 47.47,
+   "end": 48.18,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 48.21,
+   "end": 52.59,
+   "text": "that's no i don't th that's that's too big yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 49.73,
+   "end": 51.84,
+   "text": "nah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 50.6,
+   "end": 52.47,
+   "text": "i don't think so either yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 51.95,
+   "end": 52.35,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 52.47,
+   "end": 55.73,
+   "text": "i think that's gonna be a b we don't even know how to approach that at the moment i think"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 55.59,
+   "end": 55.86,
+   "text": "no"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 56.11,
+   "end": 56.39,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 57.38,
+   "end": 61.07,
+   "text": "it's a good thing to have to say we cou what we could have done if we had more time"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 61.07,
+   "end": 62.26,
+   "text": "a good future work thing isn't it"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 62.26,
+   "end": 64.72,
+   "text": "stick in the conclusion of the final report"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 63.29,
+   "end": 63.61,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 63.35,
+   "end": 63.69,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 64.72,
+   "end": 68.42,
+   "text": "should if we had more time this is what we would have done"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 65.94,
+   "end": 67.88,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 66.3,
+   "end": 67.15,
+   "text": "yeah yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 67.15,
+   "end": 69.28,
+   "text": "yeah yeah that's right"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 67.88,
+   "end": 72.58,
+   "text": "unless we d unless we discover some sorta time warp thing it's not gonna happen"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 68.42,
+   "end": 68.72,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 69.28,
+   "end": 79.35,
+   "text": "um um so maybe i mean we we should we should definitely well we could probably not put it under this heading"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 70.97,
+   "end": 73.6,
+   "text": "yeah if yeah if"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 72.58,
+   "end": 72.89,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 72.81,
+   "end": 75.8,
+   "text": "yeah but that's definitely one thing we could just remove"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 79.35,
+   "end": 82.66,
+   "text": "but put it under changes since the initial specification"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 80.13,
+   "end": 81.42,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 81.42,
+   "end": 82.32,
+   "text": "yeah sure"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 82.32,
+   "end": 82.47,
+   "text": "yep"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 82.41,
+   "end": 82.7,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 82.66,
+   "end": 89.01,
+   "text": "and say you know we didn't we decided the the r time is too short whatever"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 85.04,
+   "end": 86.24,
+   "text": "we don't think there's enough time"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 88.37,
+   "end": 91.36,
+   "text": "or we felt there were more important things to do with our time than"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 90.9,
+   "end": 91.71,
+   "text": "yes"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 91.92,
+   "end": 92.22,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 92.95,
+   "end": 94.68,
+   "text": "than worry about"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 93.36,
+   "end": 93.84,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 93.84,
+   "end": 98.48,
+   "text": "we would prefer to concentrate on the main"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 101.17,
+   "end": 101.54,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 104.96,
+   "end": 111.0,
+   "text": "and i think we should probably uh comment explicitly on the milestones here as well and say we managed to do"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 109.14,
+   "end": 109.48,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 111.12,
+   "end": 111.6,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 111.6,
+   "end": 112.86,
+   "text": "this this and this"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 112.52,
+   "end": 115.05,
+   "text": "m m meet these milestones at yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 112.86,
+   "end": 115.66,
+   "text": "or some of them were later some were yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 115.33,
+   "end": 116.27,
+   "text": "yeah that's a good idea"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 115.66,
+   "end": 116.31,
+   "text": "we could even"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 116.27,
+   "end": 117.84,
+   "text": "you have should have a section probably"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 117.51,
+   "end": 119.38,
+   "text": "i mean we haven't really yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 117.58,
+   "end": 119.2,
+   "text": "like you know develop prototype gui"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 117.94,
+   "end": 118.27,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 119.2,
+   "end": 124.35,
+   "text": "we t you know ah yeah we managed that nicely"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 119.68,
+   "end": 119.97,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 120.46,
+   "end": 120.79,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 121.32,
+   "end": 123.51,
+   "text": "exactly"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 123.51,
+   "end": 123.68,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 123.75,
+   "end": 126.0,
+   "text": "the best file on target or something"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 124.35,
+   "end": 124.5,
+   "text": "uh"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 125.59,
+   "end": 126.54,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 126.09,
+   "end": 127.19,
+   "text": "yeah yeah"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 126.17,
+   "end": 149.5,
+   "text": "he he d he doesn't have to know exactly what i mean yeah m i mean it's hot finished but it doesn't really say"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 126.54,
+   "end": 127.91,
+   "text": "more or less"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 127.19,
+   "end": 128.56,
+   "text": "yeah put it put it good"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 127.91,
+   "end": 128.81,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 128.01,
+   "end": 136.08,
+   "text": "or t well"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 128.81,
+   "end": 129.68,
+   "text": "search yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 129.68,
+   "end": 133.51,
+   "text": "p plus plus or minus three days to yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 133.51,
+   "end": 135.05,
+   "text": "yeah that's that that's true too"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 135.05,
+   "end": 137.86,
+   "text": "that's true yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 140.06,
+   "end": 142.51,
+   "text": "conceptually"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 141.05,
+   "end": 143.8,
+   "text": "and so i've only got six days to do the topic segmentation as well"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 143.31,
+   "end": 146.24,
+   "text": "ah that's plenty"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 143.8,
+   "end": 145.95,
+   "text": "jesus"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 146.24,
+   "end": 150.64,
+   "text": "you don't have any uh s p n l p assignments do you"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 148.69,
+   "end": 151.88,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 151.88,
+   "end": 152.49,
+   "text": "uh"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 152.13,
+   "end": 154.28,
+   "text": "and you can say yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 154.28,
+   "end": 160.24,
+   "text": "we uh say we are still aiming for the development to be complete on the or something"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 154.39,
+   "end": 155.74,
+   "text": "speaker characterisation"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 157.48,
+   "end": 158.02,
+   "text": "jesus"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 160.16,
+   "end": 163.24,
+   "text": "speaker characterisation's supposed to be done already"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 160.24,
+   "end": 160.88,
+   "text": "m"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 160.58,
+   "end": 160.84,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 162.38,
+   "end": 164.42,
+   "text": "oh really"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 163.24,
+   "end": 165.75,
+   "text": "yeah two days ago"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 163.74,
+   "end": 164.39,
+   "text": "whoa"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 164.42,
+   "end": 165.02,
+   "text": "oh jeez"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 165.02,
+   "end": 171.18,
+   "text": "h um is are one of those something that you wanna change and delete from our list of expectations"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 172.98,
+   "end": 175.92,
+   "text": "give me a week and i'll tell you the answer to that"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 173.94,
+   "end": 174.36,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 174.36,
+   "end": 174.96,
+   "text": "okay"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 174.85,
+   "end": 175.93,
+   "text": "i yeah i"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 174.96,
+   "end": 175.76,
+   "text": "alright"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 175.76,
+   "end": 178.98,
+   "text": "like should we put i a hint that something like that might happen into the document"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 179.0,
+   "end": 181.45,
+   "text": "or maybe the speaker characterisation might get slimmer"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 181.89,
+   "end": 183.21,
+   "text": "yeah that's right"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 181.94,
+   "end": 182.56,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 182.56,
+   "end": 183.21,
+   "text": "alright"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 183.21,
+   "end": 184.39,
+   "text": "i i really wanna do it"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 183.21,
+   "end": 184.84,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 183.22,
+   "end": 185.8,
+   "text": "probably we won't disappear it yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 184.39,
+   "end": 186.78,
+   "text": "i mean it's not it's not gonna be difficult"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 184.84,
+   "end": 185.61,
+   "text": "yeah i know"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 185.61,
+   "end": 185.88,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 186.78,
+   "end": 191.61,
+   "text": "if at least have all the information pop up that is already in the meta data file"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 191.3,
+   "end": 192.18,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 191.61,
+   "end": 193.66,
+   "text": "that's gonna be no work at all"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 192.18,
+   "end": 192.77,
+   "text": "yeah okay"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 192.25,
+   "end": 192.78,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 192.77,
+   "end": 193.43,
+   "text": "yeah true"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 192.78,
+   "end": 193.19,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 193.19,
+   "end": 193.32,
+   "text": "yep"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 193.43,
+   "end": 193.66,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 193.66,
+   "end": 195.23,
+   "text": "so it's definitely gonna be something there"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 195.34,
+   "end": 197.81,
+   "text": "yeah we won't make it disappear but we might thin it down a bit"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 195.42,
+   "end": 196.39,
+   "text": "okay sounds good"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 196.03,
+   "end": 196.18,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 198.07,
+   "end": 198.27,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 199.21,
+   "end": 200.95,
+   "text": "um but we might not you know but we might have time"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 200.95,
+   "end": 203.12,
+   "text": "depends how how how how things m"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 201.3,
+   "end": 204.84,
+   "text": "yeah it might turn out easier than thought"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 206.75,
+   "end": 207.24,
+   "text": "um"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 208.61,
+   "end": 213.48,
+   "text": "the topic segmentation with the l c seg and text tiles basically done"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 213.48,
+   "end": 217.44,
+   "text": "it just needs to be done because you know what i mean the co yeah tuned yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 213.63,
+   "end": 215.51,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 215.51,
+   "end": 216.85,
+   "text": "tuned i guess or yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 216.85,
+   "end": 217.76,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 217.44,
+   "end": 220.69,
+   "text": "a search through the parameters or something"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 220.69,
+   "end": 222.98,
+   "text": "let's see what happens"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 222.48,
+   "end": 222.72,
+   "text": "cool"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 226.11,
+   "end": 226.41,
+   "text": "mm"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 226.6,
+   "end": 227.41,
+   "text": "yeah sounds good"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 230.15,
+   "end": 230.59,
+   "text": "what else"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 230.52,
+   "end": 230.7,
+   "text": "okay"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 234.29,
+   "end": 234.52,
+   "text": "hmm"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 236.78,
+   "end": 237.4,
+   "text": "i don't know"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 237.4,
+   "end": 240.16,
+   "text": "shall we change the deadlines"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 237.74,
+   "end": 243.53,
+   "text": "we should probably d sorry we should probably do another responsibility of packages as well"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 243.53,
+   "end": 249.61,
+   "text": "that's what he hinted that we should also um indicate who who is responsible for what from now on"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 248.33,
+   "end": 249.45,
+   "text": "right"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 249.45,
+   "end": 249.84,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 249.84,
+   "end": 253.12,
+   "text": "well i could probably just copy that straight out of the other one as well"
+  },
+  {
+   "speaker": "MEE071",
+   "start": 252.4,
+   "end": 253.41,
+   "text": "yeah pretty much"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 253.12,
+   "end": 255.19,
+   "text": "that's essentially the same as it was"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 255.19,
+   "end": 257.66,
+   "text": "maybe more detailed specifically"
+  },
+  {
+   "speaker": "FEO072",
+   "start": 257.64,
+   "end": 260.02,
+   "text": "well you could put you know yeah i don't know"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 265.42,
+   "end": 265.73,
+   "text": "mm"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 267.91,
+   "end": 269.05,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 269.05,
+   "end": 274.15,
+   "text": "should we i don't know do you think mike about our things that we had together"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 274.15,
+   "end": 276.5,
+   "text": "should we i mean now yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 275.04,
+   "end": 275.94,
+   "text": "split those apart"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 275.94,
+   "end": 276.38,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 276.38,
+   "end": 278.91,
+   "text": "i think so yeah like yeah inverted file"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 276.5,
+   "end": 280.7,
+   "text": "i mean we have it now like inverted and you have the other but what about the m"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 278.91,
+   "end": 280.16,
+   "text": "yeah exactly"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 281.98,
+   "end": 283.96,
+   "text": "removing disfluencies"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 283.51,
+   "end": 284.7,
+   "text": "oh"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 283.96,
+   "end": 285.93,
+   "text": "shall we just"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 284.7,
+   "end": 287.57,
+   "text": "well if we're skipping the audio one and then things got easier"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 287.57,
+   "end": 288.17,
+   "text": "um"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 287.75,
+   "end": 293.73,
+   "text": "yeah we just keep it together on the the pap there right now and just see what what"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 289.79,
+   "end": 291.14,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 291.14,
+   "end": 291.59,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 291.59,
+   "end": 293.83,
+   "text": "have you taken any more of a look at it"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 293.83,
+   "end": 295.45,
+   "text": "have you taken any more of a look at it"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 295.45,
+   "end": 296.71,
+   "text": "at the disfluenc okay"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 295.65,
+   "end": 297.5,
+   "text": "no not the disfluencies"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 296.71,
+   "end": 297.49,
+   "text": "yeah"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 297.49,
+   "end": 298.52,
+   "text": "okay"
+  },
+  {
+   "speaker": "FEO070",
+   "start": 297.5,
+   "end": 298.7,
+   "text": "no haven't"
+  },
+  {
+   "speaker": "MEE073",
+   "start": 298.52,
+   "end": 299.26,
+   "text": "we could probably"
+  }
+ ],
+ "diar_turns": [
+  {
+   "speaker": "FEO070",
+   "start": 0.0,
+   "end": 2.61
+  },
+  {
+   "speaker": "MEE073",
+   "start": 0.0,
+   "end": 2.38
+  },
+  {
+   "speaker": "FEO072",
+   "start": 0.0,
+   "end": 3.47
+  },
+  {
+   "speaker": "MEE073",
+   "start": 4.1,
+   "end": 6.51
+  },
+  {
+   "speaker": "FEO070",
+   "start": 5.46,
+   "end": 5.79
+  },
+  {
+   "speaker": "FEO070",
+   "start": 7.64,
+   "end": 18.1
+  },
+  {
+   "speaker": "MEE073",
+   "start": 7.97,
+   "end": 8.08
+  },
+  {
+   "speaker": "MEE073",
+   "start": 9.53,
+   "end": 9.86
+  },
+  {
+   "speaker": "MEE071",
+   "start": 11.35,
+   "end": 13.87
+  },
+  {
+   "speaker": "MEE073",
+   "start": 11.61,
+   "end": 11.86
+  },
+  {
+   "speaker": "FEO072",
+   "start": 12.42,
+   "end": 12.8
+  },
+  {
+   "speaker": "MEE073",
+   "start": 13.29,
+   "end": 14.54
+  },
+  {
+   "speaker": "MEE073",
+   "start": 16.21,
+   "end": 30.7
+  },
+  {
+   "speaker": "FEO072",
+   "start": 20.71,
+   "end": 21.19
+  },
+  {
+   "speaker": "FEO072",
+   "start": 23.86,
+   "end": 28.1
+  },
+  {
+   "speaker": "FEO070",
+   "start": 31.01,
+   "end": 45.74
+  },
+  {
+   "speaker": "MEE073",
+   "start": 35.63,
+   "end": 35.91
+  },
+  {
+   "speaker": "FEO072",
+   "start": 45.47,
+   "end": 49.09
+  },
+  {
+   "speaker": "MEE073",
+   "start": 46.95,
+   "end": 47.26
+  },
+  {
+   "speaker": "MEE071",
+   "start": 47.47,
+   "end": 48.18
+  },
+  {
+   "speaker": "FEO070",
+   "start": 48.21,
+   "end": 52.59
+  },
+  {
+   "speaker": "MEE071",
+   "start": 49.73,
+   "end": 51.84
+  },
+  {
+   "speaker": "FEO072",
+   "start": 50.6,
+   "end": 55.73
+  },
+  {
+   "speaker": "MEE073",
+   "start": 51.95,
+   "end": 52.35
+  },
+  {
+   "speaker": "FEO070",
+   "start": 55.59,
+   "end": 55.86
+  },
+  {
+   "speaker": "MEE073",
+   "start": 56.11,
+   "end": 56.39
+  },
+  {
+   "speaker": "MEE071",
+   "start": 57.38,
+   "end": 68.72
+  },
+  {
+   "speaker": "MEE073",
+   "start": 63.29,
+   "end": 63.61
+  },
+  {
+   "speaker": "FEO070",
+   "start": 63.35,
+   "end": 63.69
+  },
+  {
+   "speaker": "MEE073",
+   "start": 65.94,
+   "end": 72.89
+  },
+  {
+   "speaker": "FEO072",
+   "start": 66.3,
+   "end": 89.01
+  },
+  {
+   "speaker": "MEE071",
+   "start": 70.97,
+   "end": 73.54
+  },
+  {
+   "speaker": "FEO070",
+   "start": 72.81,
+   "end": 75.8
+  },
+  {
+   "speaker": "MEE073",
+   "start": 80.13,
+   "end": 82.47
+  },
+  {
+   "speaker": "FEO070",
+   "start": 82.41,
+   "end": 82.7
+  },
+  {
+   "speaker": "MEE071",
+   "start": 85.04,
+   "end": 86.24
+  },
+  {
+   "speaker": "MEE071",
+   "start": 88.37,
+   "end": 91.36
+  },
+  {
+   "speaker": "FEO072",
+   "start": 91.28,
+   "end": 91.71
+  },
+  {
+   "speaker": "MEE073",
+   "start": 91.92,
+   "end": 92.22
+  },
+  {
+   "speaker": "MEE071",
+   "start": 92.95,
+   "end": 94.2
+  },
+  {
+   "speaker": "FEO072",
+   "start": 93.36,
+   "end": 98.42
+  },
+  {
+   "speaker": "FEO070",
+   "start": 101.17,
+   "end": 101.54
+  },
+  {
+   "speaker": "FEO072",
+   "start": 104.96,
+   "end": 110.95
+  },
+  {
+   "speaker": "MEE073",
+   "start": 109.14,
+   "end": 109.48
+  },
+  {
+   "speaker": "MEE073",
+   "start": 111.12,
+   "end": 116.21
+  },
+  {
+   "speaker": "FEO072",
+   "start": 112.52,
+   "end": 115.05
+  },
+  {
+   "speaker": "MEE071",
+   "start": 115.33,
+   "end": 117.84
+  },
+  {
+   "speaker": "FEO070",
+   "start": 117.51,
+   "end": 119.38
+  },
+  {
+   "speaker": "FEO072",
+   "start": 117.58,
+   "end": 124.47
+  },
+  {
+   "speaker": "MEE073",
+   "start": 117.94,
+   "end": 118.27
+  },
+  {
+   "speaker": "MEE073",
+   "start": 119.68,
+   "end": 119.97
+  },
+  {
+   "speaker": "FEO070",
+   "start": 120.46,
+   "end": 120.79
+  },
+  {
+   "speaker": "MEE073",
+   "start": 121.32,
+   "end": 123.68
+  },
+  {
+   "speaker": "MEE071",
+   "start": 123.75,
+   "end": 126.0
+  },
+  {
+   "speaker": "MEE073",
+   "start": 125.59,
+   "end": 137.86
+  },
+  {
+   "speaker": "FEO072",
+   "start": 126.09,
+   "end": 128.56
+  },
+  {
+   "speaker": "MEE071",
+   "start": 128.01,
+   "end": 135.67
+  },
+  {
+   "speaker": "FEO070",
+   "start": 130.81,
+   "end": 149.09
+  },
+  {
+   "speaker": "MEE071",
+   "start": 141.05,
+   "end": 145.95
+  },
+  {
+   "speaker": "FEO072",
+   "start": 141.76,
+   "end": 142.51
+  },
+  {
+   "speaker": "MEE073",
+   "start": 144.54,
+   "end": 150.64
+  },
+  {
+   "speaker": "MEE071",
+   "start": 149.5,
+   "end": 152.35
+  },
+  {
+   "speaker": "FEO072",
+   "start": 152.13,
+   "end": 160.88
+  },
+  {
+   "speaker": "MEE071",
+   "start": 154.39,
+   "end": 155.74
+  },
+  {
+   "speaker": "MEE071",
+   "start": 157.48,
+   "end": 158.02
+  },
+  {
+   "speaker": "MEE071",
+   "start": 160.16,
+   "end": 165.75
+  },
+  {
+   "speaker": "MEE073",
+   "start": 160.58,
+   "end": 160.84
+  },
+  {
+   "speaker": "MEE073",
+   "start": 162.38,
+   "end": 171.18
+  },
+  {
+   "speaker": "FEO072",
+   "start": 163.74,
+   "end": 164.39
+  },
+  {
+   "speaker": "MEE071",
+   "start": 172.98,
+   "end": 175.92
+  },
+  {
+   "speaker": "MEE073",
+   "start": 173.94,
+   "end": 178.98
+  },
+  {
+   "speaker": "FEO072",
+   "start": 174.85,
+   "end": 175.84
+  },
+  {
+   "speaker": "MEE071",
+   "start": 179.0,
+   "end": 181.45
+  },
+  {
+   "speaker": "FEO072",
+   "start": 181.89,
+   "end": 195.23
+  },
+  {
+   "speaker": "MEE073",
+   "start": 181.94,
+   "end": 185.88
+  },
+  {
+   "speaker": "MEE071",
+   "start": 183.22,
+   "end": 185.8
+  },
+  {
+   "speaker": "MEE073",
+   "start": 191.3,
+   "end": 193.66
+  },
+  {
+   "speaker": "MEE071",
+   "start": 192.25,
+   "end": 193.32
+  },
+  {
+   "speaker": "MEE071",
+   "start": 195.34,
+   "end": 197.81
+  },
+  {
+   "speaker": "MEE073",
+   "start": 195.42,
+   "end": 196.39
+  },
+  {
+   "speaker": "FEO070",
+   "start": 196.03,
+   "end": 196.18
+  },
+  {
+   "speaker": "MEE073",
+   "start": 198.07,
+   "end": 198.27
+  },
+  {
+   "speaker": "MEE071",
+   "start": 199.21,
+   "end": 203.12
+  },
+  {
+   "speaker": "FEO072",
+   "start": 201.3,
+   "end": 204.84
+  },
+  {
+   "speaker": "FEO072",
+   "start": 206.75,
+   "end": 207.21
+  },
+  {
+   "speaker": "MEE071",
+   "start": 208.61,
+   "end": 222.98
+  },
+  {
+   "speaker": "MEE073",
+   "start": 213.63,
+   "end": 217.76
+  },
+  {
+   "speaker": "MEE073",
+   "start": 222.48,
+   "end": 222.72
+  },
+  {
+   "speaker": "MEE073",
+   "start": 226.11,
+   "end": 226.42
+  },
+  {
+   "speaker": "FEO072",
+   "start": 226.6,
+   "end": 227.42
+  },
+  {
+   "speaker": "FEO072",
+   "start": 230.15,
+   "end": 230.59
+  },
+  {
+   "speaker": "MEE073",
+   "start": 230.52,
+   "end": 230.7
+  },
+  {
+   "speaker": "FEO070",
+   "start": 234.3,
+   "end": 234.52
+  },
+  {
+   "speaker": "FEO070",
+   "start": 236.78,
+   "end": 240.17
+  },
+  {
+   "speaker": "FEO072",
+   "start": 237.74,
+   "end": 249.61
+  },
+  {
+   "speaker": "MEE073",
+   "start": 248.33,
+   "end": 257.67
+  },
+  {
+   "speaker": "MEE071",
+   "start": 252.4,
+   "end": 253.42
+  },
+  {
+   "speaker": "FEO072",
+   "start": 257.64,
+   "end": 260.02
+  },
+  {
+   "speaker": "MEE073",
+   "start": 265.43,
+   "end": 265.73
+  },
+  {
+   "speaker": "FEO070",
+   "start": 267.92,
+   "end": 280.7
+  },
+  {
+   "speaker": "MEE073",
+   "start": 275.04,
+   "end": 280.17
+  },
+  {
+   "speaker": "FEO070",
+   "start": 282.48,
+   "end": 285.86
+  },
+  {
+   "speaker": "MEE073",
+   "start": 283.51,
+   "end": 288.06
+  },
+  {
+   "speaker": "FEO070",
+   "start": 287.75,
+   "end": 293.73
+  },
+  {
+   "speaker": "MEE073",
+   "start": 289.79,
+   "end": 299.14
+  },
+  {
+   "speaker": "FEO070",
+   "start": 295.65,
+   "end": 298.7
+  }
+ ]
+}

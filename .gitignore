@@ -1,0 +1,25 @@
+.venv/
+venv/
+__pycache__/
+.env
+models/
+output/
+data/mixtures/
+.pytest_cache/
+
+# Large, regenerable AMI downloads/derived data (public CC-BY-4.0 dataset;
+# re-fetch with training/download_ami.py + training/prepare_ami.py, or
+# training/prepare_meetings.py for the meeting excerpts' source shards).
+data/ami/
+data/ami_meetings/sdm/
+
+# A named team member's own voice recording, used for local pipeline testing.
+# Kept out of the public repo by default -- ask before untracking this line.
+data/Krishiv Audio.wav
+data/Krishiv Audio.m4a
+
+paper/*.aux
+paper/*.log
+paper/*.out
+/tmp/
+.DS_Store

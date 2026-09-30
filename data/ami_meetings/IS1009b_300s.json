@@ -1,0 +1,639 @@
+{
+ "meeting": "IS1009b",
+ "offset": 300.0,
+ "turns": [
+  {
+   "speaker": "FIO089",
+   "start": 6.25,
+   "end": 11.75,
+   "text": "so i'd like your suggestions to come back to the other slide where i was saying we we could suggest anything"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 11.75,
+   "end": 17.08,
+   "text": "i'd like the suggestions to be really specific so that we'll have a list of things we can cross off"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 17.08,
+   "end": 29.24,
+   "text": "not something like you know whole house control what'll be and then i found on the internet from from my research that some extended electronic entertainment control should be possible"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 29.24,
+   "end": 35.01,
+   "text": "at the budget that we're looking at and at the price point we're looking at we should be able to make it work the t v the v c r"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 35.01,
+   "end": 43.81,
+   "text": "the stereo set um maybe something else cute like a coffee pot or one other appliance or maybe a lamp"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 41.3,
+   "end": 46.86,
+   "text": "uh okay can can i at this point interject um something"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 43.81,
+   "end": 44.59,
+   "text": "i have to wind up"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 45.68,
+   "end": 46.38,
+   "text": "yeah sure"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 46.86,
+   "end": 53.55,
+   "text": "um we have received instruction from higher up that certain things should not be uh considered"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 53.2,
+   "end": 53.6,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 53.55,
+   "end": 62.62,
+   "text": "um the one thing for example something to eliminate maybe that's the teletext because that's sort of outdated with the internet"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 61.11,
+   "end": 61.46,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 61.5,
+   "end": 61.68,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 62.62,
+   "end": 70.62,
+   "text": "and according to to higher management the it should only control the t v"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 70.62,
+   "end": 81.07,
+   "text": "mostly because they feel that it's too comp complex a task to um to to include other things and they are concerned with the time to market"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 74.39,
+   "end": 75.82,
+   "text": "complicated yeah of course"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 81.27,
+   "end": 81.44,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 81.32,
+   "end": 82.12,
+   "text": "of course yeah"
+  },
+  {
+   "speaker": "FIO087",
+   "start": 81.85,
+   "end": 82.38,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 81.97,
+   "end": 82.85,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 82.85,
+   "end": 91.12,
+   "text": "um and the and the third thing that they wanna make sure um that their that the corporate image is being maintained"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 83.08,
+   "end": 84.4,
+   "text": "okay so that's something"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 91.12,
+   "end": 95.08,
+   "text": "and that the corporate colour and design are being used on the product"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 95.08,
+   "end": 102.21,
+   "text": "so that it's easy that that that they can be easily identified as a product of of of the company"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 102.21,
+   "end": 107.04,
+   "text": "and that there's no mistake that it could be somebody else who is bringing this out"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 104.12,
+   "end": 104.34,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 107.04,
+   "end": 113.53,
+   "text": "so i just wanted to interject this here so we're not getting too much off track here with uh with the things we wanna look at"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 113.53,
+   "end": 119.95,
+   "text": "these were instructions from higher up so we have to eliminate uh these things so it's only gonna be t v"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 118.2,
+   "end": 118.95,
+   "text": "okay so"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 119.95,
+   "end": 125.1,
+   "text": "but the one thing maybe that could be um eliminated is the teletext uh idea"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 125.4,
+   "end": 125.74,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 126.38,
+   "end": 127.29,
+   "text": "mm 'kay"
+  },
+  {
+   "speaker": "FIO087",
+   "start": 126.99,
+   "end": 127.55,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 127.0,
+   "end": 128.38,
+   "text": "alright thanks for that"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 128.38,
+   "end": 137.38,
+   "text": "um alright now other things that i found out on in my research is that the complaints that people have about the remote controls that are out there now"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 137.38,
+   "end": 140.93,
+   "text": "'cause a lot of them take too much time to learn how to use"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 140.93,
+   "end": 149.0,
+   "text": "and that was thirty four percent but even more important the thing that we did address in our last meeting that frequently it's lost somewhere in the room"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 149.0,
+   "end": 153.88,
+   "text": "um so those are two things that we definitely do wanna address"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 153.88,
+   "end": 160.99,
+   "text": "uh we wanna s make it as simple as possible we wanna make it um obvious and intuitive to use"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 160.99,
+   "end": 171.6,
+   "text": "and then the things about finding it we talked about the a light emitting thing as well as uh maybe a beep"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 171.6,
+   "end": 177.34,
+   "text": "and i think that those are things after my research that we definitely wanna try to incorporate"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 177.34,
+   "end": 178.73,
+   "text": "'kay can we go to the next slide please"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 179.65,
+   "end": 187.37,
+   "text": "okay so my personal preferences in this um project are really have to concentrate on the sizzle"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 187.37,
+   "end": 191.69,
+   "text": "that is the selling point the thing that's gonna make it an impulse purchase"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 191.69,
+   "end": 198.02,
+   "text": "uh because once there's no be back well in sales they always say you know be backs don't come back"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 198.02,
+   "end": 201.07,
+   "text": "if somebody says oh i'll come back and get it next week you're dead"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 201.07,
+   "end": 202.5,
+   "text": "they're never gonna come back and buy it"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 202.5,
+   "end": 209.83,
+   "text": "you've gotta make it attractive enough so they buy it now now now w now is a big word in in my book for selling this thing"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 210.54,
+   "end": 218.32,
+   "text": "and in order to make it really sellable we've gotta shorten the learning curve make sure it's really intuitive and easy to use"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 218.32,
+   "end": 226.03,
+   "text": "we have to have as few buttons as possible because more buttons is more confusion so that's why i'm saying simplicity is good"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 226.03,
+   "end": 228.95,
+   "text": "finding it's important obviously you can't use it if you can't find it"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 228.95,
+   "end": 235.66,
+   "text": "so we've gotta concentrate on the features that help you find it and i've already said this several times but i put it down in writing here"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 235.66,
+   "end": 239.11,
+   "text": "it should be an attractive impulse purchase at twenty five euros"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 239.11,
+   "end": 244.76,
+   "text": "so it has to have enough value that when somebody looks at it they say uh twenty five euros i'm not gonna take that"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 244.76,
+   "end": 249.21,
+   "text": "has to be so great that they're gonna say uh twenty five euros isn't much"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 249.21,
+   "end": 256.96,
+   "text": "um and then maybe a motto like we put fashion in electronics might be something we can use in our marketing campaign"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 256.58,
+   "end": 256.82,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FIO089",
+   "start": 256.96,
+   "end": 258.95,
+   "text": "okay that's uh about it for me right now"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 259.53,
+   "end": 260.07,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 263.03,
+   "end": 264.6,
+   "text": "and uh"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 265.99,
+   "end": 271.57,
+   "text": "who would be next uh i guess that would be you"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 271.19,
+   "end": 271.88,
+   "text": "yeah 'kay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 271.57,
+   "end": 272.29,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 272.29,
+   "end": 274.49,
+   "text": "you want me to get your slide show up"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 273.35,
+   "end": 274.54,
+   "text": "yeah yeah sure"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 274.49,
+   "end": 274.79,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 274.54,
+   "end": 274.98,
+   "text": "thank you"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 280.82,
+   "end": 283.19,
+   "text": "and you are number three"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 282.47,
+   "end": 283.79,
+   "text": "number two yeah"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 283.19,
+   "end": 283.66,
+   "text": "number two"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 290.92,
+   "end": 291.58,
+   "text": "yeah exactly"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 291.62,
+   "end": 292.16,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIO084",
+   "start": 293.76,
+   "end": 295.94,
+   "text": "uh can you make it uh full screen please"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 294.24,
+   "end": 294.66,
+   "text": "okay"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 295.82,
+   "end": 296.14,
+   "text": "mm-hmm"
+  },
+  {
+   "speaker": "FIE088",
+   "start": 298.28,
+   "end": 298.62,
+   "text": "yep"
+  }
+ ],
+ "diar_turns": [
+  {
+   "speaker": "FIO089",
+   "start": 0.0,
+   "end": 44.59
+  },
+  {
+   "speaker": "FIE088",
+   "start": 41.99,
+   "end": 81.07
+  },
+  {
+   "speaker": "FIO089",
+   "start": 45.68,
+   "end": 46.38
+  },
+  {
+   "speaker": "FIO089",
+   "start": 53.2,
+   "end": 53.6
+  },
+  {
+   "speaker": "FIO089",
+   "start": 61.11,
+   "end": 61.46
+  },
+  {
+   "speaker": "FIO084",
+   "start": 61.5,
+   "end": 61.68
+  },
+  {
+   "speaker": "FIO084",
+   "start": 74.39,
+   "end": 75.82
+  },
+  {
+   "speaker": "FIO084",
+   "start": 81.27,
+   "end": 81.44
+  },
+  {
+   "speaker": "FIO089",
+   "start": 81.32,
+   "end": 82.12
+  },
+  {
+   "speaker": "FIO087",
+   "start": 81.85,
+   "end": 82.38
+  },
+  {
+   "speaker": "FIE088",
+   "start": 81.97,
+   "end": 125.1
+  },
+  {
+   "speaker": "FIO089",
+   "start": 83.08,
+   "end": 84.37
+  },
+  {
+   "speaker": "FIO084",
+   "start": 104.12,
+   "end": 104.34
+  },
+  {
+   "speaker": "FIO089",
+   "start": 118.2,
+   "end": 118.92
+  },
+  {
+   "speaker": "FIO089",
+   "start": 125.4,
+   "end": 125.74
+  },
+  {
+   "speaker": "FIE088",
+   "start": 126.38,
+   "end": 127.29
+  },
+  {
+   "speaker": "FIO087",
+   "start": 126.99,
+   "end": 127.55
+  },
+  {
+   "speaker": "FIO089",
+   "start": 127.0,
+   "end": 178.73
+  },
+  {
+   "speaker": "FIO089",
+   "start": 179.65,
+   "end": 209.83
+  },
+  {
+   "speaker": "FIO089",
+   "start": 210.54,
+   "end": 258.95
+  },
+  {
+   "speaker": "FIO084",
+   "start": 256.58,
+   "end": 256.82
+  },
+  {
+   "speaker": "FIE088",
+   "start": 259.68,
+   "end": 260.07
+  },
+  {
+   "speaker": "FIE088",
+   "start": 263.03,
+   "end": 264.6
+  },
+  {
+   "speaker": "FIE088",
+   "start": 265.99,
+   "end": 274.8
+  },
+  {
+   "speaker": "FIO084",
+   "start": 271.19,
+   "end": 271.88
+  },
+  {
+   "speaker": "FIO084",
+   "start": 273.35,
+   "end": 274.98
+  },
+  {
+   "speaker": "FIE088",
+   "start": 280.82,
+   "end": 283.66
+  },
+  {
+   "speaker": "FIO084",
+   "start": 282.47,
+   "end": 283.8
+  },
+  {
+   "speaker": "FIO084",
+   "start": 290.93,
+   "end": 291.58
+  },
+  {
+   "speaker": "FIE088",
+   "start": 291.62,
+   "end": 292.17
+  },
+  {
+   "speaker": "FIO084",
+   "start": 293.76,
+   "end": 295.94
+  },
+  {
+   "speaker": "FIE088",
+   "start": 294.24,
+   "end": 294.66
+  },
+  {
+   "speaker": "FIE088",
+   "start": 295.82,
+   "end": 296.14
+  },
+  {
+   "speaker": "FIE088",
+   "start": 298.28,
+   "end": 298.62
+  },
+  {
+   "speaker": "FIO084",
+   "start": 298.41,
+   "end": 300.0
+  }
+ ]
+}

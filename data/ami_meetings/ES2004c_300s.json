@@ -1,0 +1,689 @@
+{
+ "meeting": "ES2004c",
+ "offset": 300.0,
+ "turns": [
+  {
+   "speaker": "FEE016",
+   "start": 7.83,
+   "end": 12.18,
+   "text": "so possibly that the feature that we put first is actually third is still important"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 16.02,
+   "end": 16.31,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 16.95,
+   "end": 24.13,
+   "text": "okay um now the fashion update which relates to very personal preferences among our subject group"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 24.13,
+   "end": 30.86,
+   "text": "um we found from our um consultants in paris and milan who des attended all the design and fashion fairs there"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 30.86,
+   "end": 35.05,
+   "text": "that fruit and vegetables are going to be the theme for clothes shoes and furniture"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 47.85,
+   "end": 54.32,
+   "text": "so a lot of interesting feedback there both from our market research departments and from our people in paris and milan"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 54.32,
+   "end": 56.54,
+   "text": "be interesting to see what our design people make of that"
+  },
+  {
+   "speaker": "MEO015",
+   "start": 56.94,
+   "end": 57.17,
+   "text": "'kay"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 59.65,
+   "end": 60.19,
+   "text": "um"
+  },
+  {
+   "speaker": "MEO015",
+   "start": 60.73,
+   "end": 60.82,
+   "text": "yep"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 61.49,
+   "end": 63.91,
+   "text": "let's start from the inside and work our way out"
+  },
+  {
+   "speaker": "MEO015",
+   "start": 63.56,
+   "end": 64.3,
+   "text": "fine"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 64.29,
+   "end": 65.82,
+   "text": "yeah okay"
+  },
+  {
+   "speaker": "MEO015",
+   "start": 64.3,
+   "end": 64.99,
+   "text": "it's okay with me"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 67.42,
+   "end": 69.01,
+   "text": "not yet"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 69.01,
+   "end": 69.44,
+   "text": "'kay"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 71.04,
+   "end": 73.09,
+   "text": "um yes thank you"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 80.97,
+   "end": 83.52,
+   "text": "that screwed in"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 81.15,
+   "end": 81.79,
+   "text": "okay"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 88.56,
+   "end": 89.72,
+   "text": "i hate those little things"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 89.94,
+   "end": 90.29,
+   "text": "yeah"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 90.96,
+   "end": 95.96,
+   "text": "especially if you do them on too tight and you can't get the leverage on them to undo them"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 93.87,
+   "end": 95.9,
+   "text": "i know"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 103.02,
+   "end": 104.72,
+   "text": "'kay"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 110.79,
+   "end": 111.24,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 110.83,
+   "end": 111.88,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 111.88,
+   "end": 122.52,
+   "text": "um this is uh all about the design of the actual components and the availability of the components we have in stock at the moment"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 127.42,
+   "end": 139.48,
+   "text": "the the main idea of the whole thing is just so you sh you just press buttons and it should activate things on the t v and we discussed last meeting that it should be easy to find"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 139.48,
+   "end": 144.73,
+   "text": "um also in this study i've looked into the availability of some of the materials"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 144.73,
+   "end": 150.55,
+   "text": "'cause some of the things that we looked at last time aren't un unfortunately aren't available"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 151.06,
+   "end": 151.4,
+   "text": "'kay"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 155.96,
+   "end": 165.96,
+   "text": "this is uh the chip called the t a double one eight three five which is what's used in pretty much every remote control 'cause it sends out standard signals"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 165.96,
+   "end": 174.86,
+   "text": "based on your input and um it's pretty much used for all all t v remotes at the moment"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 174.86,
+   "end": 178.53,
+   "text": "um and then we we're loo looking into battery options"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 193.7,
+   "end": 202.19,
+   "text": "dynamo charging i thought that that might be a bit silly to be to be honest people won't it's it's basically like wind up radio"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 197.45,
+   "end": 198.86,
+   "text": "wa can you explain that"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 200.12,
+   "end": 202.6,
+   "text": "like a right okay"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 202.19,
+   "end": 206.26,
+   "text": "so you wind up your remote control before you use it"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 204.94,
+   "end": 207.99,
+   "text": "how what kind of how l long can you get out of that"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 206.26,
+   "end": 207.02,
+   "text": "it might"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 207.99,
+   "end": 212.23,
+   "text": "i mean can you pick it up and then wind it for two minutes and then that's it for the night"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 208.76,
+   "end": 209.47,
+   "text": "you"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 212.23,
+   "end": 212.97,
+   "text": "or"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 224.12,
+   "end": 233.16,
+   "text": "like the the solar charging 'cause most people have the light on in the room anyway so they could get when when you got t v"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 231.46,
+   "end": 232.94,
+   "text": "that doesn't count though does it"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 232.32,
+   "end": 234.91,
+   "text": "does does light charge as as sunlight does"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 233.78,
+   "end": 237.9,
+   "text": "i thought it was u v like"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 234.91,
+   "end": 235.71,
+   "text": "artificial light"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 237.42,
+   "end": 239.1,
+   "text": "alright i"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 239.16,
+   "end": 239.99,
+   "text": "has to be solar"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 251.03,
+   "end": 257.25,
+   "text": "yeah it would the d yeah the dynamo would take more space 'cause you actually need a physical sort of handle to wind up"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 257.01,
+   "end": 259.69,
+   "text": "i'm pretty sure that solar is from the sun"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 259.77,
+   "end": 260.85,
+   "text": "yeah okay"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 260.34,
+   "end": 260.67,
+   "text": "mm"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 260.54,
+   "end": 268.35,
+   "text": "uh i don't think it counts electric lights no but i mean not many you don't want to limit your market"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 261.91,
+   "end": 263.03,
+   "text": "artificial light no"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 268.35,
+   "end": 273.0,
+   "text": "i mean people who live in basement flats there's not that many people but there are people"
+  },
+  {
+   "speaker": "FEE016",
+   "start": 271.16,
+   "end": 275.32,
+   "text": "i know different parts of the world too if we're if we're marketing internationally"
+  },
+  {
+   "speaker": "MEO015",
+   "start": 271.57,
+   "end": 271.97,
+   "text": "uh"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 271.73,
+   "end": 272.04,
+   "text": "but"
+  },
+  {
+   "speaker": "MEO015",
+   "start": 275.7,
+   "end": 275.92,
+   "text": "right"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 282.72,
+   "end": 288.72,
+   "text": "i think the point is that it charges through the day and then you've got it charged for the evening"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 287.25,
+   "end": 290.62,
+   "text": "but i i think i think the the next one's the best anyway"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 290.12,
+   "end": 290.6,
+   "text": "okay"
+  },
+  {
+   "speaker": "MEE014",
+   "start": 290.62,
+   "end": 298.34,
+   "text": "the the kinetic charging which is like you get it in r you get it in wrist watches and you d you don't even notice it"
+  },
+  {
+   "speaker": "FEE013",
+   "start": 295.4,
+   "end": 296.32,
+   "text": "yeah i've seen"
+  }
+ ],
+ "diar_turns": [
+  {
+   "speaker": "FEE016",
+   "start": 0.0,
+   "end": 6.4
+  },
+  {
+   "speaker": "FEE016",
+   "start": 7.84,
+   "end": 39.12
+  },
+  {
+   "speaker": "FEE013",
+   "start": 16.02,
+   "end": 16.31
+  },
+  {
+   "speaker": "FEE016",
+   "start": 40.13,
+   "end": 56.54
+  },
+  {
+   "speaker": "MEO015",
+   "start": 56.94,
+   "end": 57.17
+  },
+  {
+   "speaker": "FEE013",
+   "start": 57.29,
+   "end": 60.19
+  },
+  {
+   "speaker": "MEO015",
+   "start": 60.73,
+   "end": 60.82
+  },
+  {
+   "speaker": "FEE013",
+   "start": 61.49,
+   "end": 63.91
+  },
+  {
+   "speaker": "MEO015",
+   "start": 63.56,
+   "end": 64.99
+  },
+  {
+   "speaker": "MEE014",
+   "start": 64.29,
+   "end": 65.82
+  },
+  {
+   "speaker": "FEE016",
+   "start": 65.43,
+   "end": 69.44
+  },
+  {
+   "speaker": "FEE013",
+   "start": 67.55,
+   "end": 69.49
+  },
+  {
+   "speaker": "FEE013",
+   "start": 71.04,
+   "end": 73.09
+  },
+  {
+   "speaker": "MEE014",
+   "start": 80.97,
+   "end": 83.52
+  },
+  {
+   "speaker": "FEE016",
+   "start": 81.15,
+   "end": 81.79
+  },
+  {
+   "speaker": "FEE013",
+   "start": 88.56,
+   "end": 89.72
+  },
+  {
+   "speaker": "MEE014",
+   "start": 89.94,
+   "end": 90.29
+  },
+  {
+   "speaker": "FEE013",
+   "start": 90.96,
+   "end": 95.96
+  },
+  {
+   "speaker": "FEE016",
+   "start": 95.41,
+   "end": 95.9
+  },
+  {
+   "speaker": "MEE014",
+   "start": 103.02,
+   "end": 104.54
+  },
+  {
+   "speaker": "FEE013",
+   "start": 110.79,
+   "end": 111.24
+  },
+  {
+   "speaker": "MEE014",
+   "start": 110.83,
+   "end": 125.01
+  },
+  {
+   "speaker": "MEE014",
+   "start": 126.23,
+   "end": 150.55
+  },
+  {
+   "speaker": "FEE013",
+   "start": 151.06,
+   "end": 151.4
+  },
+  {
+   "speaker": "MEE014",
+   "start": 152.66,
+   "end": 178.53
+  },
+  {
+   "speaker": "FEE013",
+   "start": 172.18,
+   "end": 172.33
+  },
+  {
+   "speaker": "MEE014",
+   "start": 179.86,
+   "end": 206.64
+  },
+  {
+   "speaker": "FEE013",
+   "start": 197.45,
+   "end": 198.86
+  },
+  {
+   "speaker": "FEE013",
+   "start": 200.12,
+   "end": 202.6
+  },
+  {
+   "speaker": "FEE013",
+   "start": 204.94,
+   "end": 212.55
+  },
+  {
+   "speaker": "MEE014",
+   "start": 208.76,
+   "end": 209.16
+  },
+  {
+   "speaker": "MEE014",
+   "start": 212.15,
+   "end": 233.17
+  },
+  {
+   "speaker": "FEE013",
+   "start": 231.46,
+   "end": 232.94
+  },
+  {
+   "speaker": "FEE016",
+   "start": 232.32,
+   "end": 235.71
+  },
+  {
+   "speaker": "FEE013",
+   "start": 233.78,
+   "end": 237.8
+  },
+  {
+   "speaker": "MEE014",
+   "start": 235.19,
+   "end": 235.53
+  },
+  {
+   "speaker": "MEE014",
+   "start": 236.91,
+   "end": 239.1
+  },
+  {
+   "speaker": "FEE016",
+   "start": 239.17,
+   "end": 239.99
+  },
+  {
+   "speaker": "FEE013",
+   "start": 239.61,
+   "end": 240.83
+  },
+  {
+   "speaker": "MEO015",
+   "start": 240.57,
+   "end": 252.17
+  },
+  {
+   "speaker": "MEE014",
+   "start": 251.03,
+   "end": 257.25
+  },
+  {
+   "speaker": "FEE013",
+   "start": 257.01,
+   "end": 259.69
+  },
+  {
+   "speaker": "MEE014",
+   "start": 259.77,
+   "end": 260.85
+  },
+  {
+   "speaker": "FEE016",
+   "start": 260.34,
+   "end": 260.68
+  },
+  {
+   "speaker": "FEE013",
+   "start": 260.54,
+   "end": 273.0
+  },
+  {
+   "speaker": "FEE016",
+   "start": 261.91,
+   "end": 263.03
+  },
+  {
+   "speaker": "FEE016",
+   "start": 265.27,
+   "end": 266.02
+  },
+  {
+   "speaker": "FEE016",
+   "start": 271.17,
+   "end": 275.32
+  },
+  {
+   "speaker": "MEO015",
+   "start": 271.57,
+   "end": 271.74
+  },
+  {
+   "speaker": "MEE014",
+   "start": 271.73,
+   "end": 271.93
+  },
+  {
+   "speaker": "MEE014",
+   "start": 275.14,
+   "end": 280.39
+  },
+  {
+   "speaker": "MEO015",
+   "start": 275.7,
+   "end": 275.93
+  },
+  {
+   "speaker": "MEO015",
+   "start": 279.56,
+   "end": 280.19
+  },
+  {
+   "speaker": "FEE013",
+   "start": 280.59,
+   "end": 288.72
+  },
+  {
+   "speaker": "MEE014",
+   "start": 287.25,
+   "end": 300.0
+  },
+  {
+   "speaker": "FEE013",
+   "start": 290.12,
+   "end": 290.6
+  },
+  {
+   "speaker": "FEE013",
+   "start": 295.4,
+   "end": 296.24
+  }
+ ]
+}

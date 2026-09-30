@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Transcript Demo</title>
+<style>
+  :root {
+    --bg: #f7f7f5; --panel: #ffffff; --text: #1c1c1a; --muted: #6b6b66; --line: #e4e4df;
+    --accent: #2453d6; --danger: #b3261e; --ok: #1f7a3d; --warn: #8a5a00; --hl: #fff1b8;
+    --c0: #2453d6; --c1: #b3261e; --c2: #1f7a3d; --c3: #8a5a00;
+    --c4: #7a3fb0; --c5: #007c89; --c6: #b0306b; --c7: #4a5568;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413; --panel: #1e1e1c; --text: #ecece8; --muted: #9a9a93; --line: #2f2f2b;
+      --accent: #7d9cff; --danger: #ff8a80; --ok: #6fd28f; --warn: #e0b45a; --hl: #5a4a10;
+      --c0: #7d9cff; --c1: #ff8a80; --c2: #6fd28f; --c3: #e0b45a;
+      --c4: #c79bff; --c5: #5fd0dc; --c6: #ff8fbd; --c7: #a9b4c6;
+    }
+    button.primary, button.stop { color: #10121a; }   /* light accent fills need dark text */
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  h2 { font-size: 13px; margin: 0; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .bar + .bar { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  button, select { font: inherit; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line);
+                   background: var(--panel); color: var(--text); }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.stop { background: var(--danger); border-color: var(--danger); color: #fff; }
+  button:disabled, select:disabled { opacity: .45; cursor: not-allowed; }
+  label { color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  input[type=number] { width: 64px; font: inherit; padding: 6px; border-radius: 8px;
+                       border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+  .spacer { flex: 1; }
+  .note { color: var(--muted); font-size: 13px; }
+  #status { color: var(--muted); font-variant-numeric: tabular-nums; }
+  #status.live { color: var(--ok); }
+  #status.error { color: var(--danger); }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; min-width: 120px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 12px; }
+
+  .cols { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .cols.two { grid-template-columns: 3fr 2fr; }
+  @media (max-width: 800px) { .cols.two { grid-template-columns: 1fr; } }
+  .col { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 4px; min-height: 260px; }
+  .col > h2 { padding: 4px 12px 8px; }
+  .empty { color: var(--muted); padding: 24px; text-align: center; }
+  .row { display: grid; grid-template-columns: 52px 108px 1fr; gap: 10px; padding: 6px 12px;
+         border-radius: 6px; align-items: baseline; }
+  .row:hover { background: color-mix(in srgb, var(--text) 5%, transparent); }
+  .row.fresh { animation: pop .5s ease-out; }
+  @keyframes pop { from { background: color-mix(in srgb, var(--accent) 22%, transparent); } to { background: transparent; } }
+  .t { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+  .spk { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .txt { overflow-wrap: anywhere; }
+  .ov { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px;
+        padding: 0 4px; margin-left: 6px; vertical-align: 1px; }
+  .pause { color: var(--muted); font-style: italic; }
+  mark.fill { background: var(--hl); color: inherit; border-radius: 3px; padding: 0 2px; }
+  #ref .row { grid-template-columns: 52px 80px 1fr; }
+  #ref .txt { color: var(--muted); }
+  .legend { margin-top: 10px; }
+  @media (max-width: 560px) { .row { grid-template-columns: 50px 1fr; } .txt { grid-column: 1 / -1; } }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Live Transcript Demo</h1>
+  <p class="sub">Who said what, including the <mark class="fill">um</mark>s and overlaps. Pick a recording, press play: you will hear the audio while the transcript trails it by the system's real end-to-end delay.</p>
+
+  <div class="panel">
+    <div class="bar">
+      <label>Recording <select id="sample"></select></label>
+      <label>Model <select id="model"></select></label>
+      <label>Play <select id="seconds">
+        <option value="30">first 30 s</option><option value="60" selected>first 60 s</option>
+        <option value="120">first 2 min</option><option value="0">all</option></select></label>
+      <button id="play" class="primary">Play demo</button>
+      <button id="stop" class="stop" disabled>Stop</button>
+      <span class="spacer"></span>
+      <span id="status">loading…</span>
+    </div>
+    <div class="note" id="samplenote" style="margin-top:8px"></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="s-lag">–</b><span>seconds behind the audio</span></div>
+    <div class="stat"><b id="s-lines">0</b><span>lines</span></div>
+    <div class="stat"><b id="s-spk">0</b><span>speakers found</span></div>
+    <div class="stat"><b id="s-ov">0</b><span>overlap lines</span></div>
+    <div class="stat"><b id="s-fill">0</b><span>fillers kept (um, uh…)</span></div>
+  </div>
+
+  <div class="cols" id="cols">
+    <div class="col"><h2>Live transcript</h2><div id="transcript"><div class="empty" id="empty">Transcript will appear here.</div></div></div>
+    <div class="col" id="refcol" hidden><h2>What was actually said (ground truth)</h2><div id="ref"></div></div>
+  </div>
+  <div class="note legend">Speaker colours are assigned by the system with no prior knowledge of the people. <span class="ov">overlap</span> marks lines recovered from simultaneous speech by the separation stage. The ground-truth column appears when the recording has one.</div>
+
+  <details class="panel">
+    <summary>Live input (microphone or your own recording)</summary>
+    <div class="bar">
+      <button id="mic">Start microphone</button>
+      <button id="file">Replay a file…</button>
+      <label>max speakers <input id="nspk" type="number" min="1" max="12" placeholder="auto"></label>
+      <span class="note">Microphone capture is untested with real hardware; browser noise suppression is switched off because it attenuates the quieter of two overlapping talkers.</span>
+    </div>
+    <input id="filepick" type="file" accept="audio/*" hidden>
+  </details>
+  <audio id="player" preload="auto"></audio>
+</main>
+
+<script>
+"use strict";
+const TARGET_SR = 16000;
+const $ = (id) => document.getElementById(id);
+const els = { sample: $("sample"), model: $("model"), seconds: $("seconds"), play: $("play"), stop: $("stop"),
+              mic: $("mic"), file: $("file"), nspk: $("nspk"), filepick: $("filepick"), status: $("status"),
+              transcript: $("transcript"), ref: $("ref"), refcol: $("refcol"), cols: $("cols"),
+              note: $("samplenote"), player: $("player") };
+
+let ws = null, audioCtx = null, micStream = null, workletNode = null, replayTimer = null, sending = false;
+let samples = [], refTurns = [], refShown = 0, refClock = null, playing = false;
+const stats = { lines: 0, overlap: 0, fillers: 0, speakers: new Set() };
+
+function setStatus(text, cls = "") { els.status.textContent = text; els.status.className = cls; }
+function setRunning(running, demo = false) {
+  playing = running;
+  els.play.disabled = els.mic.disabled = els.file.disabled = running;
+  els.sample.disabled = els.model.disabled = els.seconds.disabled = els.nspk.disabled = running;
+  els.stop.disabled = !running;
+}
+
+/* ---- formatting ---------------------------------------------------------- */
+
+function speakerColor(name) {
+  const m = /(\d+)\s*$/.exec(name);
+  const idx = m ? (parseInt(m[1], 10) - 1) : [...name].reduce((a, c) => a + c.charCodeAt(0), 0);
+  return `var(--c${((idx % 8) + 8) % 8})`;
+}
+function fmtTime(s) {
+  const tenths = Math.round(s * 10);   // round first so 59.96 -> 01:00.0, never 00:60.0
+  const m = Math.floor(tenths / 600);
+  return `${String(m).padStart(2, "0")}:${((tenths % 600) / 10).toFixed(1).padStart(4, "0")}`;
+}
+const FILLER = /^(um+|uh+|er+m?|ah|hmm+|hm|mm+|mhm|uh-huh|mm-hmm)$/i;
+
+/* Render text as DOM (never innerHTML): [pause] markers dimmed, fillers highlighted. */
+function renderText(container, text) {
+  let fillers = 0;
+  text.split(/(\[pause [^\]]*\])/).forEach((part) => {
+    if (!part) return;
+    if (part.startsWith("[pause")) {
+      const p = document.createElement("span"); p.className = "pause"; p.textContent = part;
+      container.append(" ", p, " ");
+      return;
+    }
+    part.split(/(\s+)/).forEach((tok) => {
+      const bare = tok.replace(/[.,!?;:"()]/g, "");
+      if (bare && FILLER.test(bare)) {
+        const m = document.createElement("mark"); m.className = "fill"; m.textContent = tok; container.append(m); fillers++;
+      } else container.append(tok);
+    });
+  });
+  return fillers;
+}
+
+function makeRow(time, speaker, overlap) {
+  const row = document.createElement("div"); row.className = "row";
+  const t = document.createElement("span"); t.className = "t"; t.textContent = fmtTime(time);
+  const spk = document.createElement("span"); spk.className = "spk";
+  spk.style.color = speakerColor(speaker); spk.textContent = speaker;
+  if (overlap) { const ov = document.createElement("span"); ov.className = "ov"; ov.textContent = "overlap"; spk.append(ov); }
+  const txt = document.createElement("span"); txt.className = "txt";
+  row.append(t, spk, txt);
+  return { row, txt };
+}
+
+function addLine(msg) {
+  $("empty")?.remove();
+  const { row, txt } = makeRow(msg.start, msg.speaker, msg.overlap);
+  row.dataset.start = msg.start; row.classList.add("fresh");
+  const fillers = renderText(txt, msg.text);
+
+  stats.lines++; stats.fillers += fillers; stats.speakers.add(msg.speaker); if (msg.overlap) stats.overlap++;
+  $("s-lines").textContent = stats.lines; $("s-fill").textContent = stats.fillers;
+  $("s-spk").textContent = stats.speakers.size; $("s-ov").textContent = stats.overlap;
+
+  // Keep chronological order even if a later batch contains an earlier line.
+  const rows = els.transcript.querySelectorAll(".row");
+  let placed = false;
+  for (let i = rows.length - 1; i >= 0; i--) {
+    if (parseFloat(rows[i].dataset.start) <= msg.start) { rows[i].after(row); placed = true; break; }
+  }
+  if (!placed) els.transcript.prepend(row);
+  row.scrollIntoView({ block: "nearest" });
+}
+
+function resetView() {
+  els.transcript.innerHTML = '<div class="empty" id="empty">Transcript will appear here.</div>';
+  els.ref.innerHTML = ""; refShown = 0;
+  stats.lines = stats.overlap = stats.fillers = 0; stats.speakers = new Set();
+  ["s-lines", "s-ov", "s-fill", "s-spk"].forEach((id) => ($(id).textContent = "0")); $("s-lag").textContent = "–";
+}
+
+/* ---- ground truth, revealed in step with the audio ---------------------------- */
+
+function startRefClock(startOffset = 0) {
+  stopRefClock();
+  if (!refTurns.length) return;
+  const t0 = performance.now();
+  refClock = setInterval(() => {
+    const now = (performance.now() - t0) / 1000 + startOffset;
+    while (refShown < refTurns.length && refTurns[refShown].start <= now) {
+      const t = refTurns[refShown++];
+      const { row, txt } = makeRow(t.start, t.speaker, false);
+      row.querySelector(".spk").style.color = "var(--muted)";
+      renderText(txt, t.text);
+      els.ref.append(row); row.scrollIntoView({ block: "nearest" });
+    }
+  }, 200);
+}
+function stopRefClock() { if (refClock) { clearInterval(refClock); refClock = null; } }
+
+/* ---- websocket ---------------------------------------------------------------------- */
+
+function wsUrl(query = "") {
+  const proto = location.protocol === "https:" ? "wss" : "ws";
+  return `${proto}://${location.host}/ws${query}`;
+}
+function onMessage(ev, hooks = {}) {
+  const msg = JSON.parse(ev.data);
+  if (msg.type === "ready") hooks.ready?.();
+  else if (msg.type === "started") hooks.started?.(msg);
+  else if (msg.type === "line") addLine(msg);
+  else if (msg.type === "status") { setStatus(`live · ${msg.lag_s}s behind`, "live"); $("s-lag").textContent = msg.lag_s; }
+  else if (msg.type === "error") { setStatus(msg.message, "error"); cleanup(); }
+  else if (msg.type === "done") { setStatus("finished"); cleanup(); }
+}
+
+/* ---- demo: the server plays the recording; the browser plays the same audio ------------- */
+
+async function playDemo() {
+  const id = els.sample.value, model = els.model.value, seconds = els.seconds.value;
+  resetView(); setRunning(true, true); setStatus("starting…");
+  refTurns = []; refShown = 0;
+  const s = samples.find((x) => x.id === id);
+  els.refcol.hidden = !s.has_reference; els.cols.classList.toggle("two", s.has_reference);
+  if (s.has_reference) {
+    try { refTurns = (await (await fetch(`/api/reference/${id}`)).json()).filter((t) => !+seconds || t.start < +seconds); } catch (_) {}
+  }
+  els.player.src = `/audio/${id}`;
+  ws = new WebSocket(wsUrl(`?sample=${encodeURIComponent(id)}&model=${model}&seconds=${seconds}`));
+  sending = true;
+  ws.onmessage = (ev) => onMessage(ev, {
+    started: (m) => {
+      // The server has begun feeding audio: start the sound and the ground-truth clock together.
+      els.player.currentTime = 0;
+      els.player.play().catch(() => setStatus("live · (browser blocked audio; click the page and replay)", "live"));
+      startRefClock();
+      if (+seconds) setTimeout(() => els.player.pause(), (m.duration + 0.5) * 1000);
+    },
+  });
+  ws.onerror = () => { setStatus("connection error", "error"); cleanup(); };
+  ws.onclose = () => { if (sending) { setStatus("disconnected", "error"); cleanup(); } };
+}
+
+/* ---- live input: 16 kHz int16 over the same socket --------------------------------------- */
+
+class Resampler {
+  // Box-filter downsampler with carry-over so chunk boundaries don't click.
+  constructor(inRate) { this.ratio = inRate / TARGET_SR; this.buf = []; this.pos = 0; }
+  push(chunk) {
+    for (let i = 0; i < chunk.length; i++) this.buf.push(chunk[i]);
+    const out = [];
+    while (this.pos + this.ratio <= this.buf.length) {
+      const a = Math.floor(this.pos), b = Math.min(this.buf.length, Math.ceil(this.pos + this.ratio));
+      let sum = 0; for (let i = a; i < b; i++) sum += this.buf[i];
+      out.push(sum / (b - a));
+      this.pos += this.ratio;
+    }
+    const drop = Math.floor(this.pos);
+    if (drop > 0) { this.buf = this.buf.slice(drop); this.pos -= drop; }
+    return out;
+  }
+}
+function toInt16(floats) {
+  const out = new Int16Array(floats.length);
+  for (let i = 0; i < floats.length; i++) out[i] = Math.max(-1, Math.min(1, floats[i])) * 32767;
+  return out;
+}
+function sendPcm(int16) { if (ws && ws.readyState === WebSocket.OPEN && int16.length) ws.send(int16.buffer); }
+
+function openLiveSocket(onReady) {
+  ws = new WebSocket(wsUrl());
+  ws.binaryType = "arraybuffer";
+  ws.onmessage = (ev) => onMessage(ev, {
+    ready: () => {
+      const n = parseInt(els.nspk.value, 10);
+      ws.send(JSON.stringify({ type: "start", num_speakers: Number.isFinite(n) ? n : null }));
+      onReady();
+    },
+  });
+  ws.onerror = () => { setStatus("connection error", "error"); cleanup(); };
+  ws.onclose = () => { if (sending) { setStatus("disconnected", "error"); cleanup(); } };
+}
+
+const WORKLET = `class Cap extends AudioWorkletProcessor {
+  process(inputs) { const ch = inputs[0][0]; if (ch) this.port.postMessage(ch.slice(0)); return true; }
+} registerProcessor("cap", Cap);`;
+
+async function startMic() {
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio: { channelCount: 1, echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+    });
+  } catch (e) { setStatus("microphone unavailable: " + e.message, "error"); return; }
+  resetView(); els.refcol.hidden = true; els.cols.classList.remove("two");
+  setRunning(true); setStatus("connecting…");
+  openLiveSocket(async () => {
+    sending = true;
+    audioCtx = new AudioContext();
+    const url = URL.createObjectURL(new Blob([WORKLET], { type: "application/javascript" }));
+    await audioCtx.audioWorklet.addModule(url);
+    const src = audioCtx.createMediaStreamSource(micStream);
+    workletNode = new AudioWorkletNode(audioCtx, "cap");
+    const rs = new Resampler(audioCtx.sampleRate);
+    let pending = [];
+    workletNode.port.onmessage = (ev) => {
+      pending.push(...rs.push(ev.data));
+      if (pending.length >= TARGET_SR / 4) { sendPcm(toInt16(pending)); pending = []; }
+    };
+    src.connect(workletNode);   // not connected to destination: no echo of your own voice
+    setStatus("live · listening", "live");
+  });
+}
+
+async function startReplay(file) {
+  resetView(); els.refcol.hidden = true; els.cols.classList.remove("two");
+  setRunning(true); setStatus("decoding…");
+  let samplesArr;
+  try {
+    const ctx = new AudioContext();
+    const decoded = await ctx.decodeAudioData(await file.arrayBuffer());
+    await ctx.close();
+    const off = new OfflineAudioContext(1, Math.ceil(decoded.duration * TARGET_SR), TARGET_SR);
+    const s = off.createBufferSource(); s.buffer = decoded; s.connect(off.destination); s.start();
+    samplesArr = (await off.startRendering()).getChannelData(0);
+  } catch (e) { setStatus("could not decode file: " + e.message, "error"); setRunning(false); return; }
+  setStatus("connecting…");
+  openLiveSocket(() => {
+    sending = true;
+    const chunk = TARGET_SR / 2;   // 0.5 s per tick, paced at real time
+    let pos = 0;
+    replayTimer = setInterval(() => {
+      sendPcm(toInt16(samplesArr.subarray(pos, pos + chunk)));
+      pos += chunk;
+      if (pos >= samplesArr.length) { clearInterval(replayTimer); replayTimer = null; finish(); }
+    }, 500);
+    setStatus("live · replaying", "live");
+  });
+}
+
+/* ---- stop / cleanup -------------------------------------------------------------------------- */
+
+function finish() {   // ask the server to flush the tail and close
+  if (ws && ws.readyState === WebSocket.OPEN) { ws.send(JSON.stringify({ type: "stop" })); setStatus("finishing…"); }
+  else cleanup();
+  stopCapture();
+}
+function stopCapture() {
+  if (replayTimer) { clearInterval(replayTimer); replayTimer = null; }
+  if (workletNode) { workletNode.disconnect(); workletNode = null; }
+  if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micStream = null; }
+  if (audioCtx) { audioCtx.close(); audioCtx = null; }
+}
+function cleanup() {
+  sending = false; stopCapture(); stopRefClock();
+  els.player.pause();
+  if (ws) { try { ws.close(); } catch (_) {} ws = null; }
+  setRunning(false);
+}
+
+/* ---- boot -------------------------------------------------------------------------------------- */
+
+async function boot() {
+  let info;
+  try { info = await (await fetch("/api/samples")).json(); }
+  catch (e) { setStatus("server not reachable", "error"); return; }
+  samples = info.samples;
+  els.sample.innerHTML = ""; els.model.innerHTML = "";
+  samples.forEach((s) => els.sample.add(new Option(`${s.label} · ${Math.round(s.duration)} s`, s.id)));
+  const names = { stock: "Stock Whisper-small", tuned: "Fine-tuned (keeps fillers)" };
+  info.models.forEach((m) => els.model.add(new Option(names[m] || m, m)));
+  if (info.models.includes("tuned")) els.model.value = "tuned";
+  const showNote = () => { const s = samples.find((x) => x.id === els.sample.value); els.note.textContent = s ? s.note + (s.speakers ? ` · ${s.speakers} speakers in the reference` : "") : ""; };
+  els.sample.onchange = showNote; showNote();
+  els.play.disabled = samples.length === 0;
+  setStatus(samples.length ? "ready" : "no demo recordings found in data/");
+
+  const q = new URLSearchParams(location.search);          // ?autostart=<id>&model=stock|tuned  (for scripted demos)
+  if (q.get("autostart") && samples.some((s) => s.id === q.get("autostart"))) {
+    els.sample.value = q.get("autostart"); if (q.get("model")) els.model.value = q.get("model");
+    if (q.get("seconds")) els.seconds.value = q.get("seconds");
+    showNote(); playDemo();
+  }
+}
+
+els.play.onclick = playDemo;
+// Demo sessions are driven by the server, so Stop just aborts; live input asks the server to flush its tail first.
+els.stop.onclick = () => { if (ws && ws.url.includes("sample=")) cleanup(); else finish(); };
+els.mic.onclick = startMic;
+els.file.onclick = () => els.filepick.click();
+els.filepick.onchange = () => { const f = els.filepick.files[0]; els.filepick.value = ""; if (f) startReplay(f); };
+boot();
+</script>
+</body>
+</html>

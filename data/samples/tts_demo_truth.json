@@ -1,0 +1,8 @@
+{
+  "turns": [
+    {"speaker": "Daniel", "start": 0.0, "end": 7.5,
+     "text": "So I was thinking, um, that we could push the deadline by a week, because the testing is taking a lot longer than we expected."},
+    {"speaker": "Samantha", "start": 5.0, "end": 12.8,
+     "text": "Wait, actually, I don't think that works for the client. They need the demo before the end of the month, and they have already told their board."}
+  ]
+}

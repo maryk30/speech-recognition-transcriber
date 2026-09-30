@@ -1,0 +1,20 @@
+# Phase 1 -- ASR baseline
+faster-whisper>=1.0
+soundfile
+numpy
+scipy
+
+# Phase 2 -- speech separation + speaker embeddings
+torch
+torchaudio
+speechbrain
+
+# Phases 3-5 -- diarization / overlap detection / enrollment
+# (needs a free HuggingFace account + token; see README.md)
+pyannote.audio>=4.0
+
+# Phase 7 -- live server
+aiohttp
+
+# dev/testing
+pytest
