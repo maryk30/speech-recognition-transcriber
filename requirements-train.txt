@@ -1,0 +1,4 @@
+# Extra dependencies for training/ (fine-tuning + AMI data prep), on top of requirements.txt
+transformers
+datasets
+pyarrow

@@ -40,6 +40,11 @@ import torch
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from config import DATA_DIR, MODELS_DIR, pick_device  # noqa: E402
+from scoring import wer  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from train_utils import (BestTracker, augment_hidden, load_trainer_state,  # noqa: E402
+                         save_trainer_state)
 
 SR = 16000
 ENC_FRAMES, ENC_DIM = 1500, 768
@@ -119,9 +124,9 @@ def build_cache(model, fe, split: str, layer: int, device: str, batch: int = 8) 
 
 
 class CachedDataset(torch.utils.data.Dataset):
-    def __init__(self, split: str, layer: int, tokenizer):
+    def __init__(self, split: str, layer: int, tokenizer, augment: bool = False):
         self.index = load_index(split)
-        self.path, self.tok = cache_path(split, layer), tokenizer
+        self.path, self.tok, self.augment = cache_path(split, layer), tokenizer, augment
         self._mm = None
 
     def __len__(self) -> int:
@@ -130,7 +135,13 @@ class CachedDataset(torch.utils.data.Dataset):
     def __getitem__(self, i: int):
         if self._mm is None:
             self._mm = np.memmap(self.path, dtype=np.float16, mode="r", shape=(len(self.index), ENC_FRAMES, ENC_DIM))
-        return torch.from_numpy(np.array(self._mm[i])), build_labels(self.tok, self.index[i]["segments"])
+        h = torch.from_numpy(np.array(self._mm[i]))
+        if self.augment:                      # training set only; validation stays clean
+            h = augment_hidden(h)
+        return h, build_labels(self.tok, self.index[i]["segments"])
+
+    def reference_text(self, i: int) -> str:
+        return " ".join(text for _, _, text in self.index[i]["segments"])
 
 
 def collate(batch):
@@ -144,7 +155,8 @@ def collate(batch):
 
 # -- forward from the cache --------------------------------------------------
 
-def loss_from_cache(model, layer: int, cached, labels):
+def encode_from_cache(model, layer: int, cached):
+    """Run the trainable top encoder layers over cached hidden states."""
     from transformers.modeling_outputs import BaseModelOutput
 
     enc = model.model.encoder
@@ -152,8 +164,37 @@ def loss_from_cache(model, layer: int, cached, labels):
     for block in enc.layers[layer:]:
         out = block(h, None)
         h = out[0] if isinstance(out, tuple) else out
-    h = enc.layer_norm(h)
-    return model(encoder_outputs=BaseModelOutput(last_hidden_state=h), labels=labels).loss
+    return BaseModelOutput(last_hidden_state=enc.layer_norm(h))
+
+
+def loss_from_cache(model, layer: int, cached, labels):
+    return model(encoder_outputs=encode_from_cache(model, layer, cached), labels=labels).loss
+
+
+def validation_wer(model, layer, dataset, tokenizer, device, n_windows: int, drop_fillers: bool = False) -> float:
+    """Greedy-decode `n_windows` evenly spread validation windows and return
+    corpus WER against their references. Fillers are scored by default:
+    keeping them is the point of this fine-tune, and loss alone doesn't say
+    whether the decoder still transcribes well."""
+    model.eval()
+    n_windows = min(n_windows, len(dataset))
+    picks = np.linspace(0, len(dataset) - 1, n_windows).astype(int)
+    errors = words = 0
+    from scoring import edit_distance, normalize
+
+    with torch.no_grad():
+        for i in picks:
+            feats, _ = dataset[int(i)]
+            enc_out = encode_from_cache(model, layer, feats[None].float().to(device))
+            # timestamps on, like the training labels; decode length capped by the model's positions
+            ids = model.generate(encoder_outputs=enc_out, max_new_tokens=min(440, model.config.max_target_positions - 8),
+                                 do_sample=False, num_beams=1, language="en", task="transcribe",
+                                 return_timestamps=True)
+            hyp = tokenizer.decode(ids[0], skip_special_tokens=True)
+            ref_w, hyp_w = normalize(dataset.reference_text(int(i)), drop_fillers), normalize(hyp, drop_fillers)
+            errors += edit_distance(ref_w, hyp_w); words += len(ref_w)
+    model.train()
+    return errors / max(words, 1)
 
 
 def evaluate_loss(model, layer, loader, device, max_batches: int) -> float:
@@ -181,6 +222,9 @@ def main() -> None:
     ap.add_argument("--train-layers", type=int, default=2, help="top encoder layers to fine-tune (cached below them)")
     ap.add_argument("--val-every", type=int, default=200)
     ap.add_argument("--save-every", type=int, default=200)
+    ap.add_argument("--weight-decay", type=float, default=0.01)
+    ap.add_argument("--val-windows", type=int, default=30, help="validation windows greedy-decoded for WER at each --val-every")
+    ap.add_argument("--resume", action="store_true", help="continue from --out (model + optimizer + schedule + step)")
     ap.add_argument("--cache-only", action="store_true")
     args = ap.parse_args()
 
@@ -191,7 +235,12 @@ def main() -> None:
     fe = WhisperFeatureExtractor.from_pretrained(args.base)
     tok = WhisperTokenizer.from_pretrained(args.base)
     tok.set_prefix_tokens(language="en", task="transcribe", predict_timestamps=True)
-    model = WhisperForConditionalGeneration.from_pretrained(args.base).to(device)
+    out_dir = Path(args.out)
+    last_dir = out_dir.with_name(out_dir.name + "-last")      # newest state; `out_dir` holds the best-WER weights
+    resume_state = load_trainer_state(last_dir) if args.resume else None
+    if args.resume and resume_state is None:
+        print(f"--resume: no {last_dir}/trainer_state.pt, starting fresh", flush=True)
+    model = WhisperForConditionalGeneration.from_pretrained(str(last_dir) if resume_state else args.base).to(device)
     model.config.use_cache = False
     n_layers = len(model.model.encoder.layers)
     layer = n_layers - args.train_layers
@@ -215,13 +264,14 @@ def main() -> None:
 
     make = lambda ds, shuffle: torch.utils.data.DataLoader(  # noqa: E731
         ds, batch_size=args.batch_size, shuffle=shuffle, collate_fn=collate, drop_last=shuffle)
-    train_dl = make(CachedDataset("train", layer, tok), True)
-    val_dl = make(CachedDataset("validation", layer, tok), False) if "validation" in splits else None
+    train_dl = make(CachedDataset("train", layer, tok, augment=True), True)
+    val_ds = CachedDataset("validation", layer, tok) if "validation" in splits else None
+    val_dl = make(val_ds, False) if val_ds else None
     eff = args.batch_size * args.grad_accum
     print(f"train windows {len(train_dl.dataset)} | micro-batch {args.batch_size} x accum {args.grad_accum} = {eff} | "
           f"~{len(train_dl.dataset) // eff} steps/epoch, {args.steps * eff / len(train_dl.dataset):.1f} epochs planned", flush=True)
 
-    opt = torch.optim.AdamW(trainable, lr=args.lr, weight_decay=0.0)
+    opt = torch.optim.AdamW(trainable, lr=args.lr, weight_decay=args.weight_decay)
     sched = torch.optim.lr_scheduler.LambdaLR(
         opt, lambda s: min((s + 1) / args.warmup, max(0.0, (args.steps - s) / max(args.steps - args.warmup, 1))))
 
@@ -229,11 +279,23 @@ def main() -> None:
         while True:
             yield from train_dl
 
-    it, out_dir, running, t0 = batches(), Path(args.out), [], time.time()
-    if val_dl:
+    best, start = BestTracker(), 0
+    if resume_state:
+        opt.load_state_dict(resume_state["optimizer"]); sched.load_state_dict(resume_state["scheduler"])
+        start, best.best = resume_state["step"], resume_state["best_wer"]
+        print(f"resumed at step {start} (best val WER so far {best.best:.3f})", flush=True)
+
+    it, running, t0 = batches(), [], time.time()
+    if val_dl and not resume_state:
         print(f"step 0 | val loss {evaluate_loss(model, layer, val_dl, device, 15):.3f} (before training)", flush=True)
 
-    for step in range(1, args.steps + 1):
+    def save(dir_: Path, step: int) -> None:
+        model.config.use_cache = True
+        model.save_pretrained(dir_); tok.save_pretrained(dir_); fe.save_pretrained(dir_)
+        model.config.use_cache = False
+        print(f"saved {dir_} @ step {step}", flush=True)
+
+    for step in range(start + 1, args.steps + 1):
         for _ in range(args.grad_accum):
             feats, labels = next(it)
             loss = loss_from_cache(model, layer, feats.to(device), labels.to(device))
@@ -245,16 +307,22 @@ def main() -> None:
         if device == "mps" and step % 25 == 0:
             torch.mps.empty_cache()          # return cached blocks so the driver footprint stays flat
         if step % args.log_every == 0:
-            el = time.time() - t0
+            el, done = time.time() - t0, step - start
             print(f"step {step}/{args.steps} | loss {np.mean(running[-args.log_every * args.grad_accum:]):.3f} | "
-                  f"lr {sched.get_last_lr()[0]:.2e} | {el / step:.1f}s/step | eta {(args.steps - step) * el / step / 60:.0f} min", flush=True)
+                  f"lr {sched.get_last_lr()[0]:.2e} | {el / done:.1f}s/step | eta {(args.steps - step) * el / done / 60:.0f} min", flush=True)
+        improved = False
         if val_dl and step % args.val_every == 0:
-            print(f"step {step} | val loss {evaluate_loss(model, layer, val_dl, device, 15):.3f}", flush=True)
+            v_wer = validation_wer(model, layer, val_ds, tok, device, args.val_windows)
+            improved = best.update(v_wer)
+            print(f"step {step} | val loss {evaluate_loss(model, layer, val_dl, device, 15):.3f} | "
+                  f"val WER {v_wer:.3f} (best {best.best:.3f}){' *' if improved else ''}", flush=True)
         if step % args.save_every == 0 or step == args.steps:
-            model.config.use_cache = True
-            model.save_pretrained(out_dir); tok.save_pretrained(out_dir); fe.save_pretrained(out_dir)
-            model.config.use_cache = False
-            print(f"saved {out_dir} @ step {step}", flush=True)
+            save(last_dir, step)
+            save_trainer_state(last_dir, step, opt, sched, best.best)
+        if improved:
+            save(out_dir, step)               # `out_dir` only ever holds the best-WER weights
+        elif not val_dl and (step % args.save_every == 0 or step == args.steps):
+            save(out_dir, step)               # no validation split: keep the old "latest" behaviour
 
 
 if __name__ == "__main__":

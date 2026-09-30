@@ -27,8 +27,16 @@ sane before touching any of this.
   drops windows with a pathological word-repeat run
   (`has_pathological_repeat`) — likely source of the fine-tuned model's own
   repetition loops at inference.
-- [ ] Everything below is **not yet done**. Re-download AMI, rebuild
-  windows with the new script, rebuild the encoder cache, then proceed.
+- [x] **Items 2-5 below are implemented** (2026-09-30, cloud session, verified
+  only with unit tests + a tiny random-weight Whisper smoke test -- no real
+  training run yet): `--resume` with full trainer state, `--weight-decay`
+  (default 0.01), latent masking on the train set only (`training/train_utils.py`),
+  and best-checkpoint selection by validation WER (`<out>` = best WER,
+  `<out>-last` = newest + `trainer_state.pt`). The old `WindowDataset` no longer
+  exists in the script. Extra deps: `pip install -r requirements-train.txt`.
+- [ ] Still **not done**: items 1 and 6-12 (need HuggingFace/AMI access and compute).
+  Re-download AMI, rebuild windows with the new script, rebuild the encoder cache,
+  then proceed.
 
 ## TODO, in order
 
