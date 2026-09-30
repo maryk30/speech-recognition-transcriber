@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Dict, List, Optional, Sequence
 
 import scoring
+from bootstrap import block_counts, bootstrap_ratio_ci
 from scoring import Turn
 
 
@@ -24,13 +25,18 @@ def score_meeting(
     """Keys: cpwer, cpwer_fillers (fillers must match too), tcpwer,
     meeteval_cpwer (should equal cpwer), filler_found / filler_total,
     and -- when diarization turns are given -- der/missed/false_alarm/
-    confusion plus per-reference-speaker consistency."""
+    confusion plus per-reference-speaker consistency. cpwer_ci is a 95%
+    block-bootstrap interval (30 s blocks, fixed speaker mapping)."""
     from meeteval_scoring import meeteval_cpwer, meeteval_tcpwer
 
     out: Dict[str, object] = {}
     out["cpwer"], _ = scoring.cp_wer(ref_turns, hyp_lines, drop_fillers=True)
     out["cpwer_fillers"], mapping = scoring.cp_wer(ref_turns, hyp_lines, drop_fillers=False)
     out["speaker_mapping"] = mapping
+    _, cp_map = scoring.cp_wer(ref_turns, hyp_lines, drop_fillers=True)
+    counts = block_counts(ref_turns, hyp_lines, cp_map, drop_fillers=True)
+    _, lo, hi = bootstrap_ratio_ci([e for e, _ in counts], [n for _, n in counts])
+    out["cpwer_ci"] = (lo, hi)
     out["meeteval_cpwer"] = meeteval_cpwer(ref_turns, hyp_lines)["wer"]
     out["tcpwer"] = meeteval_tcpwer(ref_turns, hyp_lines, collar=tcp_collar)["wer"]
     found, total = scoring.filler_recall(
@@ -49,14 +55,16 @@ def format_markdown(rows: List[Dict[str, object]]) -> str:
         return "-" if v is None else f"{v:.1%}"
 
     lines = [
-        "| meeting | ASR | DER | cpWER | tcpWER | cpWER+fillers | filler recall |",
-        "|---|---|---|---|---|---|---|",
+        "| meeting | ASR | DER | cpWER | cpWER 95% CI | tcpWER | cpWER+fillers | filler recall |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for r in rows:
         total = r.get("filler_total") or 0
         recall = f"{r['filler_found']}/{total}" if total else "-"
+        lo, hi = r.get("cpwer_ci") or (None, None)
+        ci = "-" if lo is None else f"{lo:.1%}-{hi:.1%}"
         lines.append(
-            f"| {r['meeting']} | {r['asr']} | {pct(r.get('der'))} | {pct(r['cpwer'])} | "
+            f"| {r['meeting']} | {r['asr']} | {pct(r.get('der'))} | {pct(r['cpwer'])} | {ci} | "
             f"{pct(r['tcpwer'])} | {pct(r['cpwer_fillers'])} | {recall} |"
         )
     return "\n".join(lines) + "\n"

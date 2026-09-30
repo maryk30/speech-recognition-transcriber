@@ -25,6 +25,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 import scoring  # noqa: E402
+from bootstrap import block_counts, bootstrap_ratio_ci  # noqa: E402
 from pipeline import TranscriptionPipeline  # noqa: E402
 from separation import DEFAULT_MODEL  # noqa: E402
 
@@ -69,7 +70,9 @@ def main() -> None:
         print("\n=== transcription")
         w, mapping = scoring.cp_wer(ref, hyp_lines, drop_fillers=True)
         w_fill, _ = scoring.cp_wer(ref, hyp_lines, drop_fillers=False)
-        print(f"cpWER (fillers ignored)   {w:.1%}")
+        counts = block_counts(ref, hyp_lines, mapping)
+        _, lo, hi = bootstrap_ratio_ci([e for e, _ in counts], [n for _, n in counts])
+        print(f"cpWER (fillers ignored)   {w:.1%}   [95% CI {lo:.1%}-{hi:.1%}, 30 s block bootstrap]")
         print(f"cpWER (fillers scored)    {w_fill:.1%}")
         found = total = 0
         ref_text = " ".join(t.text for t in ref)

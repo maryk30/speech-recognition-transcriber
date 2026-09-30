@@ -35,4 +35,4 @@ def test_markdown_table():
     row = score_meeting(REF, hyp)
     row.update(meeting="M1", asr="stock")
     md = format_markdown([row])
-    assert "| M1 | stock | - | 0.0% |" in md
+    assert "| M1 | stock | - | 0.0% | 0.0%-0.0% |" in md

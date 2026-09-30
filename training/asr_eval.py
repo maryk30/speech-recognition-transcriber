@@ -13,6 +13,9 @@ Reports, over the same sampled utterances:
     filler recall  fraction of reference fillers (um, uh, hmm, mm ...) present in the output
     RTF            real-time factor of the transcription itself
 
+Each rate comes with a 95% bootstrap interval (utterances resampled with
+replacement, --n-boot times), so two models' numbers can be compared honestly.
+
 Utterances are from the test split (meetings never used in training) and are
 raw SDM clips, so they include the other speakers' overlapping speech and
 room noise -- the same conditions the pipeline's ASR sees.
@@ -36,6 +39,7 @@ import soundfile as sf
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from audio_utils import normalize_rms  # noqa: E402
+from bootstrap import bootstrap_ratio_ci  # noqa: E402
 from config import DATA_DIR  # noqa: E402
 from scoring import FILLERS, edit_distance, filler_recall  # noqa: E402
 
@@ -82,6 +86,7 @@ def main() -> None:
     ap.add_argument("--normalize", action="store_true", help="loudness-normalise each clip first (audio_utils.normalize_rms)")
     ap.add_argument("--pack", action="store_true", help="use batched/packed transcription (pipeline's clean-clip path)")
     ap.add_argument("--save", default=None, help="write per-utterance hypotheses to this JSON file")
+    ap.add_argument("--n-boot", type=int, default=1000, help="bootstrap resamples for the 95%% intervals")
     args = ap.parse_args()
 
     from asr_baseline import make_transcriber
@@ -107,20 +112,29 @@ def main() -> None:
     per_utt = []
     for (meeting, _, ref), hyp in zip(data, hyps):
         ref_n, hyp_n = norm(_TAGS.sub(" ", ref)).split(), norm(_TAGS.sub(" ", hyp)).split()
-        err += edit_distance(ref_n, hyp_n); words += len(ref_n)
+        e = edit_distance(ref_n, hyp_n)
+        err += e; words += len(ref_n)
         # verbatim: lower-case + strip punctuation only, so fillers are counted
         rv = re.sub(r"[^a-z0-9'\s-]", " ", ref.lower()).replace("-", " ").split()
         hv = re.sub(r"[^a-z0-9'\s-]", " ", hyp.lower()).replace("-", " ").split()
-        verr += edit_distance(rv, hv); vwords += len(rv)
+        ve = edit_distance(rv, hv)
+        verr += ve; vwords += len(rv)
         found, total = filler_recall(ref, hyp)
         f_found += found; f_total += total
-        per_utt.append({"meeting": meeting, "ref": ref.lower(), "hyp": hyp.strip()})
+        per_utt.append({"meeting": meeting, "ref": ref.lower(), "hyp": hyp.strip(),
+                        "errors": e, "words": len(ref_n), "v_errors": ve, "v_words": len(rv),
+                        "fillers_found": found, "fillers_total": total})
+
+    def ci(num_key: str, den_key: str) -> str:
+        _, lo, hi = bootstrap_ratio_ci([r[num_key] for r in per_utt], [r[den_key] for r in per_utt],
+                                       n_boot=args.n_boot)
+        return f"[95% CI {lo:.1%}-{hi:.1%}]"
 
     audio_s = sum(len(c) for c in clips) / 16000
     print(f"\nmodel: {args.model} ({args.backend}{', packed' if args.pack else ''}{', level-normalised' if args.normalize else ''})")
-    print(f"WER (standard, fillers ignored) {err / max(words, 1):7.1%}   ({err}/{words} words)")
-    print(f"WER (verbatim, fillers scored)  {verr / max(vwords, 1):7.1%}   ({verr}/{vwords} words)")
-    print(f"filler recall                   {f_found / max(f_total, 1):7.1%}   ({f_found}/{f_total})")
+    print(f"WER (standard, fillers ignored) {err / max(words, 1):7.1%}   ({err}/{words} words)  {ci('errors', 'words')}")
+    print(f"WER (verbatim, fillers scored)  {verr / max(vwords, 1):7.1%}   ({verr}/{vwords} words)  {ci('v_errors', 'v_words')}")
+    print(f"filler recall                   {f_found / max(f_total, 1):7.1%}   ({f_found}/{f_total})  {ci('fillers_found', 'fillers_total')}")
     print(f"real-time factor                {wall / audio_s:7.2f}   ({wall:.0f}s for {audio_s:.0f}s audio)")
     if args.save:
         Path(args.save).write_text(json.dumps(per_utt, indent=1))
