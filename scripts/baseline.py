@@ -5,8 +5,9 @@ Score the full pipeline on every AMI excerpt and write a committed result.
     python scripts/baseline.py --model models/whisper-small-ami-mlx --tag tuned
     python scripts/baseline.py --meetings ES2004c_300s IS1009b_300s
 
-Writes results/baseline_<tag>.json (all metrics + transcripts' line counts +
-run metadata) and results/baseline_<tag>.md (table). Needs the models (HF
+Writes results/baseline_<tag>.json (all metrics + line counts + run metadata),
+results/baseline_<tag>.md (table), and output/meetings/<tag>/<meeting>.json
+(the hypothesis transcript and diarization turns, for error analysis). Needs the models (HF
 access + HF_TOKEN) -- the scoring itself is model-free, see src/meeting_report.py.
 """
 
@@ -55,9 +56,18 @@ def main() -> None:
         hyp = [scoring.Turn(l.speaker, l.start, l.end, l.text) for l in lines]
         hyp_diar = [scoring.Turn(t.speaker_label, t.start, t.end) for t in pipe.last_turns]
         row = score_meeting(ref, hyp, diar_ref, hyp_diar)
+        hyp_dir = ROOT / "output" / "meetings" / args.tag
+        hyp_dir.mkdir(parents=True, exist_ok=True)
+        (hyp_dir / f"{meeting}.json").write_text(json.dumps({
+            "lines": [{"speaker": l.speaker, "start": l.start, "end": l.end, "text": l.text,
+                       "from_overlap": l.from_overlap} for l in lines],
+            "diar_turns": [{"speaker": t.speaker, "start": t.start, "end": t.end} for t in hyp_diar],
+        }, indent=1))
         row.update(meeting=meeting, asr=args.tag, lines=len(lines), seconds=round(elapsed, 1))
         rows.append(row)
-        print(f"{meeting}: DER {row['der']:.1%}  cpWER {row['cpwer']:.1%}  tcpWER {row['tcpwer']:.1%}", flush=True)
+        print(f"{meeting}: DER {row['der']:.1%}  cpWER {row['cpwer']:.1%}  tcpWER {row['tcpwer']:.1%}  "
+              f"(ins {row['insertions']} / del {row['deletions']} / sub {row['substitutions']} of {row['ref_words']} ref words; "
+              f"{row['hyp_words']} hyp words)", flush=True)
 
     meta = {
         "model": args.model, "tag": args.tag, "num_speakers": args.num_speakers,

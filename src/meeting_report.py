@@ -37,7 +37,12 @@ def score_meeting(
     counts = block_counts(ref_turns, hyp_lines, cp_map, drop_fillers=True)
     _, lo, hi = bootstrap_ratio_ci([e for e, _ in counts], [n for _, n in counts])
     out["cpwer_ci"] = (lo, hi)
-    out["meeteval_cpwer"] = meeteval_cpwer(ref_turns, hyp_lines)["wer"]
+    me = meeteval_cpwer(ref_turns, hyp_lines)
+    out["meeteval_cpwer"] = me["wer"]
+    # where the errors come from: insertions vs deletions vs substitutions (fillers ignored)
+    out["ref_words"], out["insertions"], out["deletions"], out["substitutions"] = (
+        me["ref_words"], me["insertions"], me["deletions"], me["substitutions"])
+    out["hyp_words"] = sum(len(scoring.normalize(t.text)) for t in hyp_lines)
     out["tcpwer"] = meeteval_tcpwer(ref_turns, hyp_lines, collar=tcp_collar)["wer"]
     found, total = scoring.filler_recall(
         " ".join(t.text for t in ref_turns), " ".join(t.text for t in hyp_lines)

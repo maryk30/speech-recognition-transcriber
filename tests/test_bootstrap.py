@@ -42,3 +42,20 @@ def test_block_counts_unmapped_speaker_is_insertions():
     hyp = [Turn("X", 0, 10, "one two three"), Turn("Z", 40, 50, "extra words")]
     counts = block_counts(REF[:1], hyp, {"X": "A"}, block_s=30)
     assert counts[0] == (0, 3) and counts[1] == (2, 0)
+
+
+def test_paired_diff_detects_consistent_small_gain():
+    from bootstrap import paired_bootstrap_diff
+    # b is better by 1 error on every item; items vary a lot in difficulty
+    a = [10, 2, 30, 5, 8, 20] * 20
+    b = [x - 1 for x in a]
+    d = [40, 10, 60, 20, 30, 50] * 20
+    r = paired_bootstrap_diff(a, b, d)
+    assert r["diff"] < 0 and r["high"] < 0 and r["p_b_not_better"] == 0.0
+
+
+def test_paired_diff_no_difference():
+    from bootstrap import paired_bootstrap_diff
+    a = [3, 1, 4, 1, 5] * 10
+    r = paired_bootstrap_diff(a, a, [10] * 50)
+    assert r["diff"] == 0.0 and r["low"] == 0.0 and r["high"] == 0.0

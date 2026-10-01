@@ -36,3 +36,10 @@ def test_markdown_table():
     row.update(meeting="M1", asr="stock")
     md = format_markdown([row])
     assert "| M1 | stock | - | 0.0% | 0.0%-0.0% |" in md
+
+
+def test_error_breakdown_present():
+    hyp = [Turn("X", 0.0, 4.0, "so i think we should go now"), Turn("Y", 4.0, 6.0, "yeah")]
+    r = score_meeting(REF, hyp)
+    assert (r["insertions"], r["deletions"], r["substitutions"]) == (1, 1, 0)
+    assert r["ref_words"] == 8 and r["hyp_words"] == 8

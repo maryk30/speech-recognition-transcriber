@@ -72,3 +72,29 @@ def block_counts(
         errors += sum(len(w) for s, w in hyp_w.items() if s not in ref_speakers)
         counts.append((errors, sum(len(w) for w in ref_w.values())))
     return counts
+
+
+def paired_bootstrap_diff(
+    num_a: Sequence[float], num_b: Sequence[float], denom: Sequence[float],
+    n_boot: int = 2000, alpha: float = 0.05, seed: int = 0,
+) -> Dict[str, float]:
+    """Two systems scored on the SAME items (shared denominators, e.g. the
+    reference word counts). Resamples items once per draw for both systems,
+    so per-item difficulty cancels -- much tighter than comparing two
+    separate intervals. Returns rate_a, rate_b, diff (= b - a), its CI,
+    and p_b_not_better: share of draws where b's rate is >= a's."""
+    a, b, d = (np.asarray(x, float) for x in (num_a, num_b, denom))
+    if not (len(a) == len(b) == len(d)):
+        raise ValueError("all inputs must have the same length")
+    if len(d) == 0 or d.sum() == 0:
+        return {"rate_a": 0.0, "rate_b": 0.0, "diff": 0.0, "low": 0.0, "high": 0.0, "p_b_not_better": 1.0}
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, len(d), size=(n_boot, len(d)))
+    den = np.maximum(d[idx].sum(axis=1), 1e-12)
+    diffs = (b[idx].sum(axis=1) - a[idx].sum(axis=1)) / den
+    lo, hi = np.quantile(diffs, [alpha / 2, 1 - alpha / 2])
+    return {
+        "rate_a": float(a.sum() / d.sum()), "rate_b": float(b.sum() / d.sum()),
+        "diff": float((b.sum() - a.sum()) / d.sum()), "low": float(lo), "high": float(hi),
+        "p_b_not_better": float((diffs >= 0).mean()),
+    }
