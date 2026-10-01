@@ -28,7 +28,7 @@ Meeting-level differences are well inside the intervals: three 5-minute
 excerpts cannot separate the two models. The utterance-level comparison is the
 one that can. Why meeting cpWER doesn't follow the utterance gain is open:
 candidates are the separated-stream path (where the model was not trained), the
-ES2004c reference gap (86 s of speech without text, see reference_stats.md), and
+ES2004c reference gap (78 s of speech without text, see reference_stats.md), and
 diarization (IS1009b 21% confusion). Re-running the meeting stage now also
 records insertions/deletions/substitutions and saves the transcripts
 (output/meetings/<tag>/) so this can be checked rather than guessed.

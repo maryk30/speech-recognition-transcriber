@@ -2,7 +2,7 @@
 % Draft IEEE conference paper.
 % Build:  pdflatex main && pdflatex main      (needs IEEEtran.cls; Overleaf has it)
 % Every number below was produced by code in this repository (see the
-% "Reproducibility" section). Items marked TODO are not yet measured.
+% "Reproducibility" section). \tbd{...} (red) = fill in from the training log.
 % =============================================================================
 \documentclass[conference]{IEEEtran}
 
@@ -12,6 +12,9 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{url}
+\usepackage{xcolor}
+% \tbd{} marks a value to fill in from the training log before submission (renders red).
+\newcommand{\tbd}[1]{\textcolor{red}{[#1]}}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
 
@@ -29,7 +32,7 @@ Woxsen University, Hyderabad, India}}
 \maketitle
 
 \begin{abstract}
-Transcribing a conversation recorded by a single microphone in a room requires solving four problems at once: deciding who is speaking, recovering speech that overlaps, keeping disfluencies such as ``um'' and ``uh'' that off-the-shelf recognisers delete, and doing all of this quickly enough to be useful live. We describe a modular pipeline that combines neural diarisation, overlap-aware routing, two-source speech separation with voice-based stream-to-speaker assignment, and verbatim Whisper recognition, and a streaming variant that keeps speaker labels stable over a sliding window. On an Apple M3 laptop, moving Whisper-small from CPU to the Apple GPU (MLX) made transcription $5.2\times$ faster with an identical transcript, and together with GPU diarisation, clip packing and label stabilisation reduced end-to-end streaming latency from a mean of 14.5\,s (growing) to about 7--8\,s (bounded) on a two-speaker test. We also fine-tune Whisper-small on 20.2 hours of far-field AMI meeting audio, training only the top two encoder layers and the decoder from cached encoder activations so that it fits on a 17\,GB machine. On held-out meetings, filler recall rises from 0/96 (utterance-level) and 2/83 (full-pipeline meeting excerpts) to 74\% and 83\% respectively, but word error rate on raw single-microphone clips worsens (38.8\% to 42.5\%) because the model transcribes all audible speech, not only the labelled speaker. In full-pipeline scoring of three four-person AMI excerpts the fine-tuned recogniser is slightly worse on concatenated-permutation WER (mean 57.1\% vs.\ 55.5\%, mixed across meetings) at a mean DER of 19.4\%. Our evaluation is small-scale and partly synthetic, and we state its limits explicitly.
+Transcribing a conversation recorded by a single microphone in a room requires solving four problems at once: deciding who is speaking, recovering speech that overlaps, keeping disfluencies such as ``um'' and ``uh'' that off-the-shelf recognisers delete, and doing all of this quickly enough to be useful live. We describe a modular pipeline that combines neural diarisation, overlap-aware routing, two-source speech separation with voice-based stream-to-speaker assignment, and verbatim Whisper recognition, and a streaming variant that keeps speaker labels stable over a sliding window. On an Apple M3 laptop, moving Whisper-small from CPU to the Apple GPU (MLX) made transcription $5.2\times$ faster with an identical transcript, and together with GPU diarisation, clip packing and label stabilisation reduced end-to-end streaming latency from a mean of 14.5\,s (growing) to about 7--8\,s (bounded) on a two-speaker test. We also adapt Whisper-small to verbatim far-field meeting speech on the same laptop, training only the top two encoder layers and the decoder from cached encoder activations. A first attempt, trained on windows that transcribed every speaker, recovered fillers but made recognition worse, because at inference the recogniser only ever hears one speaker. Rebuilding the training windows from single-speaker stretches with the pipeline's own routing logic, together with weight decay, latent masking and checkpoint selection by validation WER, removes the regression: on 300 held-out AMI utterances WER falls from 33.9\% to 31.5\%, verbatim WER from 37.7\% to 32.2\%, and filler recall rises from 2.3\% to 64.8\%. In full-pipeline scoring of three four-person AMI excerpts (mean DER 19.4\%) the recogniser keeps 65 of 83 reference fillers instead of 2, while meeting-level cpWER is unchanged within its confidence intervals (57.3\% vs.\ 56.6\%). Our evaluation is small-scale and partly synthetic, and we report intervals and limits explicitly.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -45,7 +48,7 @@ This paper describes an end-to-end pipeline, and reports what we measured while 
 \item A modular pipeline in which overlap flags and speech boundaries are derived from a single diarisation pass, overlapped segments are separated by a two-source model, and separated streams are mapped back to diarised speakers by voice similarity, which is necessary because separator output order is arbitrary (Sec.~\ref{sec:system}).
 \item A streaming variant with a session-long speaker registry that stabilises \texttt{Speaker\_N} labels using temporal continuity between overlapping windows and voice similarity only as a fallback (Sec.~\ref{sec:streaming}).
 \item Engineering measurements that determined whether the system runs live: an Apple-GPU Whisper backend, a cost model showing Whisper call time is independent of clip length, and packing of clean clips into shared 30\,s windows, including a case where packing hurt accuracy (Sec.~\ref{sec:latency}).
-\item A memory-lean recipe for adapting Whisper-small to verbatim far-field meeting speech on a 17\,GB laptop, and an honest analysis of its mixed outcome (Sec.~\ref{sec:finetune}).
+\item A memory-lean recipe for adapting Whisper-small to verbatim far-field meeting speech on a 16\,GB laptop, the diagnosis of why a first version hurt accuracy (a train/inference speaker mismatch), and a fix that keeps fillers \emph{and} improves WER (Sec.~\ref{sec:finetune}).
 \end{itemize}
 
 %% ---------------------------------------------------------------------------
@@ -54,7 +57,7 @@ This paper describes an end-to-end pipeline, and reports what we measured while 
 
 \textbf{Separation.} SepFormer~\cite{subakan2021sepformer} is a transformer separator trained on synthetic two-speaker mixtures (e.g.\ WSJ0-2mix, Libri2Mix~\cite{cosentino2020librimix}). Such models are permutation-ambiguous; utterance-level permutation training fixes the order within a segment but not across segments, which is why streams must be re-associated with speakers in a continuous pipeline. Continuous separation benchmarks such as LibriCSS~\cite{chen2020libricss} evaluate this setting.
 
-\textbf{Multi-speaker ASR evaluation.} The CHiME challenges~\cite{watanabe2020chime6} popularised concatenated minimum-permutation WER (cpWER), which penalises both wrong words and words credited to the wrong speaker; we use it together with diarisation error rate (DER).
+\textbf{Multi-speaker ASR evaluation.} The CHiME challenges~\cite{watanabe2020chime6} popularised concatenated minimum-permutation WER (cpWER), which penalises both wrong words and words credited to the wrong speaker; we use it together with diarisation error rate (DER), cross-check it with the MeetEval toolkit~\cite{vonneumann2023meeteval}, and add its time-constrained variant (tcpWER). Intervals use the bootstrap~\cite{bisani2004bootstrap}.
 
 \textbf{Meeting corpora.} The AMI corpus~\cite{carletta2005ami} contains scenario and non-scenario meetings recorded with individual headsets and with distant microphone arrays, with verbatim transcripts that retain disfluencies. We use its single-distant-microphone (SDM) condition, the closest public match to a phone or laptop on a table.
 
@@ -110,16 +113,16 @@ The streaming variant reuses every stage on a rolling buffer. Every $\ge$4\,s of
 %% ---------------------------------------------------------------------------
 \section{Verbatim Adaptation on AMI}\label{sec:finetune}
 \subsection{Data}
-We use the utterance-level AMI SDM release (CC BY 4.0), whose transcripts are verbatim (fillers such as \emph{um}, \emph{uh}, \emph{hmm}, \emph{mm-hmm} are kept, roughly 1 in 40 words). Utterances average 3\,s, but Whisper always encodes a padded 30\,s window, so training on single utterances wastes about 90\% of the compute and never exposes the model to multi-speaker windows. All clips of a meeting come from the same microphone, so we rebuild each meeting's timeline by placing clips at their start times and cut it into windows of up to 28\,s containing consecutive utterances, labelled in Whisper's native format with timestamp tokens (consecutive segments separated by an end/start timestamp pair), so segment and word timing keep working. Text is lower-cased without punctuation (AMI's own convention). Each window is loudness-normalised (RMS 0.05); the far-field audio is very quiet (peak $\approx 0.02$), and the same normalisation is applied at inference.
+We use the utterance-level AMI SDM release (CC BY 4.0), whose transcripts are verbatim (fillers such as \emph{um}, \emph{uh}, \emph{hmm}, \emph{mm-hmm} are kept, roughly 1 in 40 words). Utterances average 3\,s, but Whisper always encodes a padded 30\,s window, so we rebuild each meeting's timeline by placing clips at their start times (all clips of a meeting come from the same microphone) and cut it into windows of up to 28\,s, labelled in Whisper's native format with timestamp tokens so segment and word timing keep working. Text is lower-cased without punctuation (AMI's convention); each window is loudness-normalised (RMS 0.05), as at inference.
 
-We use 7 of 27 training shards, chosen evenly across the split for meeting diversity: 3\,612 windows, 27\,725 utterances, 20.2\,h, 40 meetings. One validation shard (381 windows, 5 meetings) and two of four test shards are held out, with no meeting shared between splits. Evaluation uses 300 utterances sampled from the test meetings.
+\textbf{Single-speaker windows.} Our first version windowed \emph{all} speakers' utterances together, so a training target was everyone's words in time order. The pipeline's recogniser never sees that: it receives either a clean single-speaker segment or one separated stream (Sec.~\ref{sec:system}). The mismatch taught the model to transcribe whoever was audible. The current version runs the pipeline's own overlap-routing function over each meeting's reference turns and windows only utterances that lie inside single-speaker stretches, so every training pair is ``this audio, this one speaker's words''. Overlapped stretches are excluded, and windows containing a pathological word-repeat run are dropped. We use 14 of 27 training shards, chosen evenly across the split, giving \tbd{N windows, H hours, M meetings}; two validation shards and three test shards are held out, with no meeting shared between splits.
 
 \subsection{Cached-encoder fine-tuning}
-On the Apple M3 (MPS), for a batch of four 30\,s windows the Whisper-small encoder costs 2.81\,s forward+backward versus 0.46\,s for the decoder, so full fine-tuning would take about 4.5\,h per 1\,200 steps. We instead run the frozen lower ten encoder layers \emph{once} and cache the hidden states entering layer 10 as float16 (8.3\,GB for training), then train the top two encoder layers, the final encoder norm and the whole decoder (168\,M of 242\,M parameters) from the cache. The decoder learns the verbatim style and meeting vocabulary; the top encoder layers adapt to far-field acoustics. Training used AdamW, learning rate $10^{-5}$ with linear warm-up and decay, effective batch 8 (2 windows $\times$ 4 accumulation), and 1\,350 optimiser steps ($\approx$3 epochs). A micro-batch of 4 exhausted memory (GPU driver allocation grew from 5.0 to 8.4\,GB and the machine swapped), so we used 2. Training was interrupted once and resumed from the step-200 checkpoint with a fresh optimiser state and schedule, which we disclose as a deviation from a clean run. The fine-tuned weights are converted to MLX format; our converter reproduces the published stock MLX weights exactly (479 tensors, maximum difference 0) before being used on the fine-tuned model.
+On the Apple M3 (MPS), for a batch of four 30\,s windows the Whisper-small encoder costs 2.81\,s forward+backward versus 0.46\,s for the decoder, so full fine-tuning would take about 4.5\,h per 1\,200 steps. We instead run the frozen lower ten encoder layers \emph{once} and cache the hidden states entering layer 10 as float16 (8.3\,GB for training), then train the top two encoder layers, the final encoder norm and the whole decoder (168\,M of 242\,M parameters) from the cache. The decoder learns the verbatim style and meeting vocabulary; the top encoder layers adapt to far-field acoustics. Training uses AdamW (learning rate $10^{-5}$, weight decay 0.01) with linear warm-up and decay, effective batch 8 (2 windows $\times$ 4 accumulation; a micro-batch of 4 exhausted the 16\,GB machine), and 1\,400 optimiser steps. Because the cache holds hidden states rather than features, augmentation masks the cached activations directly (two 100-frame time spans and one 64-channel band per window, training set only), analogous to latent-space masking. Every 200 steps we greedy-decode 30 validation windows and keep the checkpoint with the lowest validation WER (fillers scored), rather than the last one; the selected checkpoint was step \tbd{best step}. Optimiser and schedule state are saved with every checkpoint, so an interrupted run resumes exactly; the run was started fresh, not from the earlier model. The fine-tuned weights are converted to MLX format; our converter reproduces the published stock MLX weights exactly (479 tensors, maximum difference 0) before being used on the fine-tuned model.
 
 %% ---------------------------------------------------------------------------
 \section{Experiments}\label{sec:exp}
-\textbf{Setup.} All timing is on one Apple M3 with 17\,GB unified memory. Software: PyTorch 2.14, pyannote.audio 4.0.7, SpeechBrain 1.1.1, faster-whisper 1.2.1 (CTranslate2), MLX Whisper, transformers 5.17. WER uses Whisper's English normaliser (lower-casing, spelling and number normalisation, fillers removed) on both sides; \emph{verbatim WER} keeps fillers; \emph{filler recall} is the fraction of reference fillers (multiset) present in the output. DER uses a 0.25\,s collar with overlap scored.
+\textbf{Setup.} All timing and training is on one fanless Apple M3 laptop with 16\,GB unified memory. Software: PyTorch 2.14, pyannote.audio 4.0.7, SpeechBrain 1.1.1, faster-whisper 1.2.1 (CTranslate2), MLX Whisper, transformers 5.17. WER uses Whisper's English normaliser (lower-casing, spelling and number normalisation, fillers removed) on both sides; \emph{verbatim WER} keeps fillers; \emph{filler recall} is the fraction of reference fillers (multiset) present in the output. DER uses a 0.25\,s collar with overlap scored. Brackets give 95\% percentile-bootstrap intervals (1\,000 resamples) of the ratio of summed errors to summed reference words, over utterances, or over 30\,s blocks under a fixed speaker mapping for a single meeting's cpWER.
 
 \subsection{Separation and overlap detection}
 Table~\ref{tab:sep} compares three public SepFormer checkpoints on a two-voice conversation with a 2.5\,s overlap, generated with two macOS text-to-speech voices and mixed digitally with known ground truth, and on a 6.5\,s overlap between a real recorded voice and a TTS voice. The checkpoint trained on clean LibriSpeech mixtures is far better than the one trained on noisy, reverberant WHAMR!\ mixtures; we caution that both mixtures are clean digital sums, which favours clean-trained models, and that each row is a \emph{single} mixture. Overlap detection on the first mixture placed the overlap at 5.01--7.56\,s against a true 5.0--7.5\,s.
@@ -183,73 +186,73 @@ MLX ASR + MPS torch models & 7.4 & 10.1 \\
 In the first row latency grew during overlaps (each step cost more than the audio it covered); in the others it stays bounded. Latency is dominated by the 3\,s guard, the wait for the next step, and diarisation of the 16\,s window (1--2.6\,s on MPS). This is ``a few seconds'' only loosely; we do not claim sub-second operation.
 
 \subsection{Verbatim adaptation}
-Table~\ref{tab:ami} reports the 300-utterance held-out evaluation (9 test meetings, 17.9\,min). Stock Whisper-small retains none of the 96 reference fillers, even with token suppression disabled. The fine-tuned model retains 74\% of them, but its WER is worse (42.5\% vs.\ 38.8\%).
+Table~\ref{tab:ami} reports 300 held-out utterances (16 test meetings, 17.7\,min), the same utterances for both models. Stock Whisper-small keeps 3 of 128 reference fillers even with token suppression disabled. The adapted model keeps 83 (64.8\%) and is also more accurate: WER 31.5\% against 33.9\%, and 32.2\% against 37.7\% when fillers are scored as words.
 
 \begin{table}[t]
-\caption{AMI SDM held-out utterances (300; greedy decoding). Fine-tuned rows add, cumulatively, a repetition-loop guard (temperature fallback and compression-ratio filter) and a cap on generated tokens proportional to clip length; the stock row was measured before the guard existed and was not re-run with it.}
+\caption{AMI SDM held-out utterances (300, 16 meetings, greedy decoding, both models with the repetition guard of Sec.~\ref{sec:system}). Brackets: 95\% bootstrap intervals over utterances.}
 \label{tab:ami}
-\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{@{}lrrr@{}}
+\centering\footnotesize\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-Model & WER & Verb.\ WER & Filler recall \\
+Model & WER & Verbatim WER & Filler recall \\
 \midrule
-Stock Whisper-small & \textbf{38.8\%} & \textbf{41.2\%} & 0\% (0/96) \\
-Fine-tuned & 50.1\% & 55.1\% & \textbf{74.0\%} (71/96) \\
-\quad + loop guard & 47.6\% & 48.3\% & 60.4\% (58/96) \\
-\quad + loop guard + token cap & 42.5\% & 47.0\% & \textbf{74.0\%} (71/96) \\
+Stock & 33.9 {\scriptsize[30.3, 38.3]} & 37.7 {\scriptsize[34.3, 41.8]} & 2.3 {\scriptsize[0.0, 5.3]} \\
+Adapted & \textbf{31.5} {\scriptsize[27.6, 35.9]} & \textbf{32.2} {\scriptsize[28.2, 36.4]} & \textbf{64.8} {\scriptsize[53.4, 74.8]} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Where the errors come from.} Decomposing the stock and unguarded fine-tuned outputs over the 3\,265 normalised reference words gives substitutions 14.1\% vs.\ 14.6\%, deletions 15.3\% vs.\ 8.0\%, and insertions 10.4\% vs.\ 28.8\%. Fine-tuning roughly halved deletions, the expected effect of training on verbatim text, but nearly tripled insertions. Inspection shows two causes. First, an AMI SDM utterance clip contains the other participants' speech and the reference contains only the labelled speaker's words; the fine-tuned model, trained on windows in which \emph{all} speakers' utterances are transcribed, transcribes everything audible, and the extra words count as errors under this protocol. Second, some clips triggered repetition loops (e.g.\ ``a f making a f making \ldots''), which the loop guard partly removes (47.6\% WER) at the cost of some fillers (74\% to 60\% recall). Capping generation by clip length removes most of the rest (42.5\% WER, 74\% recall): without a cap, every temperature retry of a looping output runs to the full token budget, and the guard's retries then discard correct fillers as well. The first effect is largely a mismatch between the training targets and the single-speaker reference, not a recognition failure, which is why we also evaluate at meeting level, where diarisation assigns speech to speakers before scoring.
+\textbf{What the first version got wrong.} The earlier model, trained on all-speaker windows and evaluated on a different 300-utterance sample, had kept 74\% of fillers but raised WER from 38.8\% to 42.5\%. Its error decomposition showed why: deletions fell from 15.3\% to 8.0\% of reference words, as expected from verbatim training, but insertions rose from 10.4\% to 28.8\%. An SDM utterance clip contains other participants' speech while its reference contains only the labelled speaker, and the model, trained to transcribe everyone audible, did exactly that. A second cause was repetition loops on short clips (``a f making a f making \ldots''), handled at inference by a temperature fallback and a generation cap of 8 tokens per second of audio plus 24. Removing the speaker mismatch in the training data is what turned the WER change from $+3.7$ to $-2.4$ points.
+
+The per-model intervals in Table~\ref{tab:ami} overlap for plain WER; because both models are scored on the same utterances, a paired bootstrap is the appropriate test, \tbd{paired WER difference and interval from scripts/compare\_utt.py}. The verbatim-WER and filler-recall gains are large relative to their intervals.
 
 \subsection{Meeting-level results}
-Table~\ref{tab:meeting} scores the whole pipeline on 5-minute excerpts of three AMI test meetings (four speakers each; EN2002b contains about 129\,s of overlapping speech in the excerpt), with the stock and fine-tuned recogniser. DER uses the complete speaker-turn annotation. An earlier version of this evaluation used a reference built only from the transcribed utterances, which omitted 78\,s of speech in ES2004c and produced a spurious 57\% DER (47\% false alarm); with the complete annotation the same run gives 9.4\%. The pipeline's separator handles two simultaneous speakers, so meetings with three or more simultaneous talkers are outside its design scope.
+Table~\ref{tab:meeting} scores the whole pipeline on 5-minute excerpts of three AMI test meetings with four speakers each. Overlap ranges from 5\% of speech (IS1009b) to 41\% (EN2002b: 106\,s, of which 24\,s have three or more simultaneous talkers, beyond the two-source separator by design). DER uses the complete speaker-turn annotation. The text reference of ES2004c lacks 78\,s of speech that the turn annotation contains; an earlier version of our evaluation built the DER reference from text turns and reported a spurious 57\% DER, and cpWER on that excerpt still counts correctly recognised words in those 78\,s as insertions.
 
 \begin{table}[t]
-\caption{Full-pipeline scores on 5-minute AMI SDM excerpts (4 speakers). cpWER ignores fillers on both sides. DER is identical across recognisers by construction (same diariser). Both recognisers ran with the loop guard and token cap. Fillers kept: stock $\to$ fine-tuned, out of reference fillers.}
+\caption{Full-pipeline scores on 5-minute AMI SDM excerpts (4 speakers). cpWER and tcpWER (5\,s collar) ignore fillers; brackets: 95\% block-bootstrap intervals. DER is identical for both recognisers (same diariser).}
 \label{tab:meeting}
-\centering\footnotesize\setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{@{}lrrrr@{}}
+\centering\footnotesize\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lrcccc@{}}
 \toprule
-Meeting & DER & cpWER stock & cpWER tuned & Fillers kept \\
+& & \multicolumn{2}{c}{cpWER} & tcpWER & Fillers kept \\
+\cmidrule(lr){3-4}
+Meeting & DER & Stock & Adapted & St.\,/\,Ad. & St.\,$\to$\,Ad. \\
 \midrule
-ES2004c & 9.4\% & 55.2\% & 63.3\% & 1/14 $\to$14/14 \\
-IS1009b & 25.4\% & 56.5\% & 51.8\% & 1/39 $\to$33/39 \\
-EN2002b & 23.5\% & 54.9\% & 56.3\% & 0/30 $\to$22/30 \\
+ES2004c & 9.4 & 58.7 {\scriptsize[49, 85]} & 61.9 {\scriptsize[47, 89]} & 62.9\,/\,67.1 & 1/14\,$\to$\,14/14 \\
+IS1009b & 25.4 & 56.0 {\scriptsize[32, 90]} & 53.8 {\scriptsize[24, 91]} & 58.4\,/\,56.0 & 1/39\,$\to$\,30/39 \\
+EN2002b & 23.5 & 55.0 {\scriptsize[51, 63]} & 56.3 {\scriptsize[54, 71]} & 57.1\,/\,62.6 & 0/30\,$\to$\,21/30 \\
 \midrule
-Mean / total & 19.4\% & 55.5\% & 57.1\% & 2/83 $\to$\textbf{69/83} \\
+Mean / total & 19.4 & 56.6 & 57.3 & 59.5\,/\,61.9 & 2/83\,$\to$\,\textbf{65/83} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-At meeting level the fine-tuned recogniser is slightly worse on word accuracy: mean cpWER is 57.1\% versus 55.5\% for stock, with per-meeting changes of $+8.1$, $-4.7$ and $+1.4$ points, i.e.\ no consistent direction across three meetings. The clear difference is disfluency retention: it keeps 69 of 83 reference fillers (83\%) against 2 of 83 (2\%) for the stock model, and scoring fillers as words leaves the picture unchanged (mean cpWER 57.8\% vs.\ 56.6\%). This is a smaller penalty than the utterance-level protocol of Table~\ref{tab:ami} suggests, because once diarisation assigns speech to speakers the fine-tuned model is no longer punished for transcribing bystanders. With three excerpts and swings of several points in both directions, we regard the accuracy cost as small but not precisely estimated.
+At meeting level the clear effect is disfluency retention: 65 of 83 reference fillers (78\%) against 2 (2\%). Word accuracy changes by $+3.2$, $-2.2$ and $+1.3$ cpWER points, well inside intervals that span tens of points; three 5-minute excerpts cannot distinguish the recognisers, and the utterance-level comparison above is the informative one. The time-constrained tcpWER is somewhat higher for the adapted model on two excerpts, which suggests its timestamps are less precise; we have not yet analysed this.
 
-The absolute error rates are high for both recognisers (cpWER 52--61\%) and should not be compared with published AMI numbers, which use different segmentation, reference handling and often headset audio. The DER breakdown shows why: excerpt IS1009b has 21.2\% speaker confusion (four speakers of similar voice), and EN2002b, the most overlapped excerpt, has 15.4\% missed speech; every diarisation error propagates to cpWER, and only two simultaneous speakers can be separated. ES2004c, with little overlap, has the lowest DER (9.4\%).
+The absolute error rates are high for both recognisers and should not be compared with published AMI numbers, which use different segmentation and reference handling and often headset audio. The DER breakdown shows that the dominant errors are upstream of recognition: IS1009b has 21.2\% speaker confusion (two of its speakers are labelled consistently only 52--53\% of the time), EN2002b misses 15.4\% of speech, and every diarisation error propagates to cpWER.
 
 %% ---------------------------------------------------------------------------
 \section{Discussion and Limitations}
-\textbf{The adaptation is a targeted result.} It solves the specific failure that motivated it, deleting fillers (83\% retained vs.\ 2\% at meeting level) at a small average accuracy cost (cpWER 57.1\% vs.\ 55.5\% on three excerpts; utterance WER 42.5\% vs.\ 38.8\%); we do not claim it is more accurate than the stock model, only that it is more faithful to what was said. The repetition failure mode is a known weakness of fine-tuned autoregressive recognisers on short clips and would benefit from training on shorter windows or from length-aware decoding constraints.
+\textbf{The training target must match what the recogniser will hear.} The same model, data source, layers and budget went from hurting accuracy to helping it once each training window contained one speaker, as the pipeline guarantees at inference. For components that sit inside a pipeline, the inference-time routing is part of the data specification; reusing the routing code to build the training set made this match exact rather than approximate.
 
 \textbf{Punctuation.} Because AMI transcripts carry none, the fine-tuned model emits lower-case unpunctuated text, a readability regression relative to stock Whisper. A punctuation-restoration pass would address this; we have not implemented it.
 
-\textbf{Scale and statistical strength.} The separation and end-to-end synthetic results are single mixtures, often generated with TTS voices; latency figures are single runs on one machine; the utterance test uses 300 utterances from 9 meetings and no confidence intervals; and we trained on 7 of 27 available shards for one configuration. The validation loss trajectory (2.17 stock, 1.18 at step 200, 1.09 at step 1\,000) was measured on a fixed 30-window subset and is only a training indicator. The results should be read as a systems study with indicative measurements, not a benchmark.
+\textbf{Scale and statistical strength.} The separation and end-to-end synthetic results are single mixtures, often generated with TTS voices; latency figures are single runs on one machine; the utterance test uses 300 utterances; meeting-level scoring covers three 5-minute excerpts, whose intervals are wide; we trained one configuration on 14 of 27 shards without a learning-rate sweep; and validation WER for checkpoint selection uses 30 windows. The results should be read as a systems study with indicative measurements, not a benchmark.
 
 \textbf{Design limits.} Separation is two-source; three or more simultaneous speakers cannot all be recovered. Overlap quality is bounded by diarisation: if the diariser misses a second speaker, their words are attributed to the first (observed once in our tests). Speakers who never speak alone have no clean voice print and fall back to positional pairing. The default separator was chosen on clean audio and should be re-evaluated on noisy rooms, where the WHAMR!-trained checkpoint may behave differently. The browser front end was verified only with replayed recordings and unit tests for its resampling logic, not with a live microphone.
 
-\textbf{Future work.} Training targets restricted to a single speaker (using headset channels or separated audio) should remove the transcribe-everyone behaviour; a larger share of AMI plus other corpora (e.g.\ CHiME-6, LibriCSS) would test generalisation; and true streaming diarisation would lower the latency floor set by re-diarising a window.
+\textbf{Future work.} Diarisation is now the largest error source, so a stronger or adapted diariser is the next lever; a separated-stream training set would match the recogniser's other input path; more evaluation meetings (and corpora such as NOTSOFAR-1 or CHiME-6) are needed for meeting-level conclusions; diarisation-conditioned recognition would remove the two-speaker separation limit; and incremental streaming diarisation would lower the latency floor set by re-diarising a window.
 
 %% ---------------------------------------------------------------------------
 \section{Conclusion}
-We built a speaker-independent pipeline that separates overlapped speech, attributes it to consistent speakers, keeps disfluencies, and streams on a laptop with bounded latency of roughly 7--8\,s. The largest practical gains came from measuring cost structure (GPU Whisper, per-call rather than per-second cost, label stabilisation) rather than from model changes. Adapting Whisper to verbatim meeting speech recovers most fillers (69 of 83 in full-pipeline scoring, from 2) at a small meeting-level accuracy cost (mean cpWER 57.1\% vs.\ 55.5\%), but exposes a mismatch between multi-speaker training targets and single-speaker evaluation, and produces unpunctuated text; resolving both is the main direction for future work.
+We built a speaker-independent pipeline that separates overlapped speech, attributes it to consistent speakers, keeps disfluencies, and streams on a laptop with bounded latency of roughly 7--8\,s. The largest speed gains came from measuring cost structure (GPU Whisper, per-call rather than per-second cost, label stabilisation) rather than from model changes. For verbatim recognition, matching the training targets to what the recogniser hears inside the pipeline was decisive: the adapted Whisper-small keeps about two thirds of fillers that the stock model deletes while lowering WER from 33.9\% to 31.5\% on held-out utterances. At meeting level the remaining errors are dominated by diarisation, which is where we see the most room for improvement.
 
 \section*{Demonstration and Reproducibility}
 A browser demo (\texttt{./run.sh demo}) plays bundled recordings, including the AMI excerpts, into the live pipeline at real-time pace while playing the same audio, shows speaker-coloured lines with overlap tags and highlighted fillers beside the ground-truth transcript, and switches between the stock and fine-tuned recognisers.
 
-All code, the 60-test unit suite, data-preparation, training, conversion and evaluation scripts are in the project repository; AMI is available under CC BY 4.0. Training and evaluation used fixed seeds; the fine-tuned checkpoint and per-utterance hypotheses are saved alongside the scripts.
+All code, the 88-test unit suite, data-preparation, training (\texttt{training/run\_all.sh}, resumable), conversion and evaluation scripts are in the project repository; AMI is available under CC BY 4.0. Training and evaluation used fixed seeds; per-utterance hypotheses and meeting transcripts are saved by the evaluation scripts.
 
-\section*{Acknowledgment}
-% TODO: add acknowledgments and funding, if any.
 
 %% ---------------------------------------------------------------------------
 % NOTE: entries below were written from memory and must be checked against the
@@ -265,6 +268,8 @@ All code, the 60-test unit suite, data-preparation, training, conversion and eva
 \bibitem{ravanelli2021speechbrain} M.~Ravanelli \emph{et al.}, ``SpeechBrain: A general-purpose speech toolkit,'' arXiv:2106.04624, 2021.
 \bibitem{carletta2005ami} J.~Carletta \emph{et al.}, ``The AMI meeting corpus: A pre-announcement,'' in \emph{Machine Learning for Multimodal Interaction (MLMI)}, 2005.
 \bibitem{watanabe2020chime6} S.~Watanabe \emph{et al.}, ``CHiME-6 challenge: Tackling multispeaker speech recognition for unsegmented recordings,'' arXiv:2004.09249, 2020.
+\bibitem{vonneumann2023meeteval} T.~von~Neumann, C.~Boeddeker, M.~Delcroix, and R.~Haeb-Umbach, ``MeetEval: A toolkit for computation of word error rates for meeting transcription systems,'' in \emph{Proc. CHiME Workshop}, 2023.
+\bibitem{bisani2004bootstrap} M.~Bisani and H.~Ney, ``Bootstrap estimates for confidence intervals in ASR performance evaluation,'' in \emph{Proc. ICASSP}, 2004.
 \bibitem{leroux2019sdr} J.~Le~Roux, S.~Wisdom, H.~Erdogan, and J.~R.~Hershey, ``SDR -- half-baked or well done?,'' in \emph{Proc. ICASSP}, 2019.
 \end{thebibliography}
 
